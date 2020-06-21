@@ -1,4 +1,12 @@
-package ru.peunov.logic;
+package ru.peunov.model;
 
-public class HostelHybridity implements Hybridity{
+import ru.peunov.logic.Reservation;
+
+import java.util.ArrayList;
+
+public class HostelHybridism implements Hybridism {
+    public boolean isFree(Reservation reservation, ArrayList<Reservation> allReservation){
+        //необходима реализация
+        return false;
+    }
 }
