@@ -1,10 +1,10 @@
-package ru.peunov.model;
+package ru.peunov.logic;
 
-import ru.peunov.logic.Reservation;
+import ru.peunov.model.Reservation;
 
 import java.util.ArrayList;
 
-interface Hybridism {
+public interface Hybridism {
     /**
      * Implementation pattern Strategy
      */
