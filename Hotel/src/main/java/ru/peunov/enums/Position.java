@@ -1,3 +1,3 @@
-package ru.peunov.logic;
+package ru.peunov.enums;
 
 public enum Position { ADMINISTRATOR, MAID, TECHNICAL, PLUMBER }

@@ -7,6 +7,82 @@
     <groupId>ru.peunov</groupId>
     <artifactId>Hotel</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.zenjava</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>2.0</version>
+                <configuration>
+                    <mainClass>ru.peunov.Main</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
+    <properties>
+        <hibernate-version>5.4.11.Final</hibernate-version>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.0.0</version>
+        </dependency>
+
+        <!-- to start need only this -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate-version}</version>
+        </dependency>
+
+        <!-- for JPA, use hibernate-entitymanager instead of hibernate-core -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>${hibernate-version}</version>
+        </dependency>
+
+        <!-- optional -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-osgi</artifactId>
+            <version>${hibernate-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-envers</artifactId>
+            <version>${hibernate-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-c3p0</artifactId>
+            <version>${hibernate-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-proxool</artifactId>
+            <version>${hibernate-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-infinispan</artifactId>
+            <version>${hibernate-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-ehcache</artifactId>
+            <version>${hibernate-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ru.peunov</groupId>
+            <artifactId>Hotel</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>

@@ -1,4 +1,4 @@
-package ru.peunov.logic;
+package ru.peunov.model;
 
 import ru.peunov.enums.NumberClass;
 
@@ -8,10 +8,11 @@ public class Hostel extends Number {
     }
 
     public Hostel(int id, int capacity, int price){
-        this.id = id;
+        //this.id = id;
         this.capacity = capacity;
         this.price = price;
         hybridism = new HostelHybridism();
         numberClass = NumberClass.HOSTEL;
     }
+
 }

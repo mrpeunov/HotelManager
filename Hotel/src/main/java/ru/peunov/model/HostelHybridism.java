@@ -1,6 +1,4 @@
-package ru.peunov.logic;
-
-import ru.peunov.model.Reservation;
+package ru.peunov.model;
 
 import java.util.ArrayList;
 

@@ -1,22 +1,59 @@
-package ru.peunov.logic;
+package ru.peunov.model;
 
 import ru.peunov.enums.NumberClass;
 
+import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 
+@Entity
+@Table(name = "number")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "NC")
 public abstract class Number {
     /*
     * Using pattern Strategy
     **/
-    int id;
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy= GenerationType.SEQUENCE)
+    private long id;
+
+    @Column(name = "capacity")
     int capacity;
 
-
+    @Column(name = "price")
     int price;
-    NumberClass numberClass;
-    Hybridism hybridism;
-    ArrayList<Reservation> allReservation;
 
+    @Transient
+    NumberClass numberClass;
+
+    @Transient
+    Hybridism hybridism;
+
+    @OneToMany(mappedBy = "number")
+    private List<Reservation> allReservation;
+
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+
+    /*
     public void addReservation(Reservation reservation) throws Exception {
         if(this.isFree(reservation)){
             allReservation.add(reservation);
@@ -30,23 +67,11 @@ public abstract class Number {
     }
     public NumberClass isClass(){ return numberClass; }
 
-
-
-    public Number(){}
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public int getCapacity() {
         return capacity;
     }
 
     public void setCapacity(int capacity) {
         this.capacity = capacity;
-    }
+    }*/
 }

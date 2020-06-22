@@ -1,19 +1,30 @@
-package ru.peunov.logic;
+package ru.peunov.model;
 
-import ru.peunov.model.Number;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "resident")
 public class Resident {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy= GenerationType.TABLE)
     private long id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "contact")
     private String contact;
-    private Number number;
+
+    @ManyToOne
+    @JoinColumn(name = "reservation_id")
+    private Reservation reservation;
 
     public Resident(){}
 
     public Resident(String name, String contact, Number number) {
         this.name = name;
         this.contact = contact;
-        this.number = number;
     }
 
     public String getName() {
@@ -32,13 +43,6 @@ public class Resident {
         this.contact = contact;
     }
 
-    public Number getNumber() {
-        return number;
-    }
-
-    public void setNumber(Number number) {
-        this.number = number;
-    }
 
     public long getId() {
         return id;

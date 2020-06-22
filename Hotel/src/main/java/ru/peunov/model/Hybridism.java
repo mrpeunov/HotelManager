@@ -1,4 +1,4 @@
-package ru.peunov.logic;
+package ru.peunov.model;
 
 import ru.peunov.model.Reservation;
 
