@@ -20,17 +20,17 @@ public class Worker {
      */
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy= GenerationType.TABLE)
     private long id;
 
-    @Column(name = "name", length = 100)
+    @Column(name = "name", length = 100, nullable = false)
     private String name;
 
-    @Column(name = "salary")
+    @Column(name = "salary", nullable = false)
     private int salary;
 
-    @Column(name = "position")
+    @Column(name = "position", nullable = false)
     @Enumerated(EnumType.ORDINAL)
     private Position position;
 
@@ -38,9 +38,16 @@ public class Worker {
     @Cascade(value=org.hibernate.annotations.CascadeType.ALL)
     private List<Salary> allSalary = new ArrayList<Salary>();
 
-    @Column(name = "status")
+    @Column(name = "status", nullable = false)
     @Enumerated(EnumType.ORDINAL)
     private Status status;
+
+    public Worker(String name, int salary, Position position) {
+        this.name = name;
+        this.salary = salary;
+        this.position = position;
+        this.status = Status.WORKED;
+    }
 
     public String getName() {
         return name;
@@ -74,6 +81,8 @@ public class Worker {
         this.status = status;
     }
 
+
+    public Worker() { }
 
     public void printAllSalary(){
         for(Salary item :  allSalary){
