@@ -31,6 +31,12 @@ public class Reservation {
     @Temporal(TemporalType.DATE)
     private Calendar finish;
 
+    public Reservation(List<Resident> residents, Calendar start, Calendar finish) {
+        this.residents = residents;
+        this.start = start;
+        this.finish = finish;
+    }
+
     public List<Resident> getResidents() {
         return residents;
     }

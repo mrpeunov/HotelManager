@@ -21,7 +21,59 @@ public class MainController implements Initializable {
     }
 
 
+    @FXML
+    public void newWorkerWindow(){
+        try{
+            Stage dialogWindow = new Stage();
+            NewWorkerController.setStage(dialogWindow);
+            dialogWindow.initModality(Modality.APPLICATION_MODAL);
+            dialogWindow.setTitle("Создать работника");
+            String fxmlFile = "/fxml/windowNewWorker.fxml";
+            FXMLLoader loader = new FXMLLoader();
+            Parent root = (Parent) loader.load(getClass().getResourceAsStream(fxmlFile));
+            dialogWindow.setScene(new Scene(root));
+            dialogWindow.setResizable(false);
+            dialogWindow.show();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
+    @FXML
+    public void newReservationWindow(){
+        try{
+            Stage dialogWindow = new Stage();
+            NewReservationController.setStage(dialogWindow);
+            dialogWindow.initModality(Modality.APPLICATION_MODAL);
+            dialogWindow.setTitle("Создать бронирование");
+            String fxmlFile = "/fxml/windowNewReservation.fxml";
+            FXMLLoader loader = new FXMLLoader();
+            Parent root = (Parent) loader.load(getClass().getResourceAsStream(fxmlFile));
+            dialogWindow.setScene(new Scene(root));
+            dialogWindow.setResizable(false);
+            dialogWindow.show();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void newNumberWindow(){
+        try{
+            Stage dialogWindow = new Stage();
+            NewNumberController.setStage(dialogWindow);
+            dialogWindow.initModality(Modality.APPLICATION_MODAL);
+            dialogWindow.setTitle("Создать номер");
+            String fxmlFile = "/fxml/windowNewNumber.fxml";
+            FXMLLoader loader = new FXMLLoader();
+            Parent root = (Parent) loader.load(getClass().getResourceAsStream(fxmlFile));
+            dialogWindow.setScene(new Scene(root));
+            dialogWindow.setResizable(false);
+            dialogWindow.show();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
 
 

@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Entity
 @DiscriminatorValue("EC")
 public class Economy extends Number {
-    public Economy(long id, int capacity, int price){
+    public Economy(int capacity, int price){
         this.capacity = capacity;
         this.price = price;
         hybridism = new ClassicalHybridism();

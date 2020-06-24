@@ -1,5 +1,7 @@
 package ru.peunov.model;
 
+import ru.peunov.HibernateUtil;
+import ru.peunov.dao.NumberDAO;
 import ru.peunov.enums.NumberClass;
 
 import java.util.ArrayList;
@@ -13,6 +15,11 @@ public class NumberManager {
 
     private NumberManager() {
         //связь с базой данных
+        //
+        //
+        //
+        //
+        // х
     };
 
     public static NumberManager getInstance(){
@@ -22,32 +29,33 @@ public class NumberManager {
         return numberManager;
     }
 
-    public void addNewNumber(int capacity, int price, NumberClass numberClass){
-        int count = numbers.size() + 1;
-        this.addNumber(capacity, count, price, numberClass);
-    }
-
-    public void addNumber(int capacity, int count, int price, NumberClass numberClass){
+    public void addNumber(int capacity, int price, NumberClass numberClass){
         Number newNumber;
         switch (numberClass){
 
             case HOSTEL:
-                newNumber = new Hostel(count, price, capacity);
+                newNumber = new Hostel(price, capacity);
                 break;
 
             case ECONOMY:
-                newNumber = new Economy(count, price, capacity);
+                newNumber = new Economy(price, capacity);
                 break;
 
             case LUX:
-                newNumber = new Lux(count, price, capacity);
+                newNumber = new Lux(price, capacity);
                 break;
 
             case STANDARD:
             default:
-                newNumber = new Standard(count, price, capacity);
+                newNumber = new Standard(price, capacity);
                 break;
         }
         numbers.add(newNumber);
+        NumberDAO numberDAO = new NumberDAO(HibernateUtil.getSessionFactory());
+        numberDAO.create(newNumber);
+    }
+
+    public ArrayList<Number> getNumbers() {
+        return numbers;
     }
 }

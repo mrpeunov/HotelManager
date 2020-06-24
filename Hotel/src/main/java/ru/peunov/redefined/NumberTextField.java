@@ -1,4 +1,4 @@
-package ru.peunov.controller;
+package ru.peunov.redefined;
 
 import javafx.scene.control.TextField;
 

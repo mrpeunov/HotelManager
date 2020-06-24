@@ -1,7 +1,7 @@
 package ru.peunov.enums;
 
 public enum Position {
-    ADMINISTRATOR, MAID, SECURITE, PLUMBER;
+    ADMINISTRATOR, MAID, SECURITY, PLUMBER;
     public static Position parsePosition(String string){
         Position result = null;
         if(string.equals("Администратор")){
@@ -14,7 +14,7 @@ public enum Position {
             result = Position.PLUMBER;
         }
         if(string.equals("Охранник")){
-            result = Position.SECURITE;
+            result = Position.SECURITY;
         }
         if(result == null){
             result = Position.ADMINISTRATOR;

@@ -52,8 +52,15 @@ public abstract class Number {
         this.price = price;
     }
 
+    public boolean isFree(Reservation reservation) {
+        return hybridism.isFree(reservation, allReservation);
+    }
 
-    /*
+    public NumberClass getNumberClass() {
+        return numberClass;
+    }
+
+
     public void addReservation(Reservation reservation) throws Exception {
         if(this.isFree(reservation)){
             allReservation.add(reservation);
@@ -62,9 +69,8 @@ public abstract class Number {
         }
     }
 
-    public boolean isFree(Reservation reservation) {
-        return hybridism.isFree(reservation, allReservation);
-    }
+    /*
+
     public NumberClass isClass(){ return numberClass; }
 
     public int getCapacity() {

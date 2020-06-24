@@ -9,8 +9,7 @@ import javax.persistence.Entity;
 @DiscriminatorValue("ST")
 public class Standard extends Number {
 
-    public Standard(int id, int capacity, int price){
-        //this.id = id;
+    public Standard(int capacity, int price){
         this.capacity = capacity;
         this.price = price;
         hybridism = new ClassicalHybridism();

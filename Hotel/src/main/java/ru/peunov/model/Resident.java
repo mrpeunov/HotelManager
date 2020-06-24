@@ -22,7 +22,7 @@ public class Resident {
 
     public Resident(){}
 
-    public Resident(String name, String contact, Number number) {
+    public Resident(String name, String contact) {
         this.name = name;
         this.contact = contact;
     }
@@ -37,6 +37,22 @@ public class Resident {
 
     public String getContact() {
         return contact;
+    }
+
+    public Reservation getReservation() {
+        return reservation;
+    }
+
+    @Override
+    public String toString() {
+        return "Resident{" +
+                "name='" + name + '\'' +
+                ", contact='" + contact + '\'' +
+                '}';
+    }
+
+    public void setReservation(Reservation reservation) {
+        this.reservation = reservation;
     }
 
     public void setContact(String contact) {

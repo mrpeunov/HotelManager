@@ -7,7 +7,7 @@
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity"
           minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0"
           prefWidth="772.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="ru.peunov.controller.NewWorkerController"
+          fx:controller="ru.peunov.controller.MainController"
 >
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -21,15 +21,16 @@
         <menus>
           <Menu mnemonicParsing="false" text="Бронирования">
             <items>
-                  <MenuItem mnemonicParsing="false" text="Создать бронирование" onAction="#newReservation"/>
+                  <MenuItem mnemonicParsing="false" text="Создать бронирование" onAction="#newReservationWindow"/>
               <MenuItem mnemonicParsing="false" text="Показать текущие бронирования" />
                   <MenuItem mnemonicParsing="false" text="Показать все бронирования" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Номера">
             <items>
+                <MenuItem mnemonicParsing="false" text="Создать номер" onAction="#newNumberWindow" />
               <MenuItem mnemonicParsing="false" text="Показать все номера" />
-                  <MenuItem mnemonicParsing="false" text="Создать номер" />
+
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Сотрудники">

@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import ru.peunov.controller.NumberTextField?>
+<?import ru.peunov.redefined.NumberTextField?>
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.peunov.controller.NewWorkerController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -27,7 +27,8 @@
             <RowConstraints />
          </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" onAction="#newWorker" prefHeight="30.0" prefWidth="150.0" text="Создать" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+            <Button mnemonicParsing="false" onAction="#newWorker" prefHeight="30.0" prefWidth="150.0" text="Создать"
+                    GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
                <GridPane.margin>
                   <Insets bottom="10.0" left="400.0" right="50.0" top="10.0" />
                </GridPane.margin></Button>
@@ -55,7 +56,7 @@
                   <Insets left="20.0" right="50.0" />
                </GridPane.margin>
             </NumberTextField>
-            <ChoiceBox fx:id="choice" prefHeight="26.0" prefWidth="364.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <ChoiceBox fx:id="choice" value="Администратор" prefHeight="26.0" prefWidth="364.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="20.0" right="50.0" />
                </GridPane.margin>
