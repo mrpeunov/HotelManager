@@ -21,26 +21,7 @@ public class Main extends Application {
     public static void main(String[] args) throws Exception {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Hotel hotel = new Hotel();
-        /*
-        Worker worker = new Worker();
-        worker.giveSalary();
-        worker.giveSalary();
-        WorkerDAO workerDAO = new WorkerDAO(sessionFactory);
-
-        worker.giveSalary();
-        worker.printAllSalary();
-        workerDAO.saveOrUpdate(worker);
-
-
-
-        Number lux = new Economy();
-        lux.setCapacity(4);
-        lux.setPrice(300);
-        NumberDAO numberDAO = new NumberDAO(sessionFactory);
-        numberDAO.create(lux);
-        */
         launch(args);
-        //sessionFactory.close();
         System.exit(0);
     }
 
@@ -50,7 +31,8 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader();
         Parent root = (Parent) loader.load(getClass().getResourceAsStream(fxmlFile));
         stage.setTitle("Hotel Manager");
-        stage.setMaximized(true);
+        //stage.setMaximized(true);
+        stage.setResizable(false);
         stage.setScene(new Scene(root));
 
         stage.show();

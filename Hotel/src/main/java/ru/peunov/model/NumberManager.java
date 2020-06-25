@@ -1,25 +1,41 @@
 package ru.peunov.model;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import ru.peunov.HibernateUtil;
 import ru.peunov.dao.NumberDAO;
 import ru.peunov.enums.NumberClass;
 
-import java.util.ArrayList;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.util.List;
 
 public class NumberManager {
     /**
      * Using Pattern Singleton
      */
     private static NumberManager numberManager;
-    private ArrayList<Number> numbers = new ArrayList<Number>();
+    private List<Number> numbers;
 
     private NumberManager() {
-        //связь с базой данных
-        //
-        //
-        //
-        //
-        // х
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        try{
+            Session session = sessionFactory.openSession();
+            session.beginTransaction();
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Number> criteriaQuery = builder.createQuery(Number.class);
+            Root<Number> root = criteriaQuery.from(Number.class);
+            criteriaQuery.select(root);
+            Query<Number> q = session.createQuery(criteriaQuery);
+            numbers = q.getResultList();
+            session.close();
+
+        } catch (Exception e){
+            System.out.println("Просто здравствуй, просто как дела");
+            e.printStackTrace();
+        }
     };
 
     public static NumberManager getInstance(){
@@ -55,7 +71,11 @@ public class NumberManager {
         numberDAO.create(newNumber);
     }
 
-    public ArrayList<Number> getNumbers() {
+    public List<Number> getNumbers() {
         return numbers;
+    }
+
+    public static void update(){
+        numberManager = new NumberManager();
     }
 }

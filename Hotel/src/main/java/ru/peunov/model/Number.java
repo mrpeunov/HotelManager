@@ -69,15 +69,16 @@ public abstract class Number {
         }
     }
 
-    /*
-
-    public NumberClass isClass(){ return numberClass; }
-
-    public int getCapacity() {
-        return capacity;
+    @Override
+    public String toString() {
+        return "Number{" +
+                "id=" + id +
+                ", capacity=" + capacity +
+                ", price=" + price +
+                '}';
     }
 
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
-    }*/
+    public long getId() {
+        return id;
+    }
 }

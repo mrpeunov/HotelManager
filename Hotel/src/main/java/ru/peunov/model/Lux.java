@@ -8,7 +8,6 @@ import javax.persistence.*;
 @DiscriminatorValue("LX")
 public class Lux extends Number {
     public Lux(int capacity, int price){
-        //this.id = id;
         this.capacity = capacity;
         this.price = price;
         hybridism = new ClassicalHybridism();

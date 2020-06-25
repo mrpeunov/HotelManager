@@ -10,13 +10,11 @@ import javax.persistence.Entity;
 @DiscriminatorValue("HOS")
 public class Hostel extends Number {
     public Hostel(){
-
         hybridism = new HostelHybridism();
         numberClass = NumberClass.HOSTEL;
     }
 
     public Hostel(int capacity, int price){
-        //this.id = id;
         this.capacity = capacity;
         this.price = price;
         hybridism = new HostelHybridism();

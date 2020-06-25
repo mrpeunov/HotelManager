@@ -1,41 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity"
-          minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0"
-          prefWidth="772.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="ru.peunov.controller.MainController"
->
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.peunov.controller.MainController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="ALWAYS" />
-    <RowConstraints maxHeight="486.0" minHeight="10.0" prefHeight="470.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="486.0" minHeight="10.0" prefHeight="52.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="647.0" minHeight="10.0" prefHeight="618.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
       <MenuBar prefHeight="0.0" prefWidth="600.0">
         <menus>
           <Menu mnemonicParsing="false" text="Бронирования">
             <items>
-                  <MenuItem mnemonicParsing="false" text="Создать бронирование" onAction="#newReservationWindow"/>
+                  <MenuItem mnemonicParsing="false" onAction="#newReservationWindow" text="Создать бронирование" />
               <MenuItem mnemonicParsing="false" text="Показать текущие бронирования" />
                   <MenuItem mnemonicParsing="false" text="Показать все бронирования" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Номера">
             <items>
-                <MenuItem mnemonicParsing="false" text="Создать номер" onAction="#newNumberWindow" />
-              <MenuItem mnemonicParsing="false" text="Показать все номера" />
+                <MenuItem mnemonicParsing="false" onAction="#newNumberWindow" text="Создать номер" />
+              <MenuItem mnemonicParsing="false" onAction="#showAllNumber" text="Показать все номера" />
 
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Сотрудники">
             <items>
-              <MenuItem mnemonicParsing="false" text="Создать сотрудника" onAction="#newWorkerWindow"/>
+              <MenuItem mnemonicParsing="false" onAction="#newWorkerWindow" text="Создать сотрудника" />
                   <MenuItem mnemonicParsing="false" text="Показать всех действующих сотрудников" />
                   <MenuItem mnemonicParsing="false" text="Показать всех сотрудников" />
             </items>
@@ -49,5 +47,15 @@
             </Menu>
         </menus>
       </MenuBar>
+      <Label fx:id="title" text="Название поля" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <ScrollPane fx:id="scrollPane" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+         <content>
+            <VBox fx:id="mainField" />
+         </content>
+      </ScrollPane>
    </children>
 </GridPane>
