@@ -16,8 +16,7 @@ public class Salary {
     @Column(name = "size")
     private int size;
 
-    @ManyToOne
-    @Cascade(value=org.hibernate.annotations.CascadeType.ALL)
+    @ManyToOne(optional = true, cascade = CascadeType.ALL)
     @JoinColumn(name="worker_id")
     private Worker worker;
 

@@ -16,5 +16,6 @@ public class Economy extends Number {
 
     public Economy(){
         hybridism = new ClassicalHybridism();
+        numberClass = NumberClass.ECONOMY;
     }
 }

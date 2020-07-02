@@ -1,5 +1,8 @@
 package ru.peunov.model;
 
+import ru.peunov.HibernateUtil;
+import ru.peunov.dao.ReservationDAO;
+
 public class Hotel {
     FinanceManager financeManager;
     NumberManager numberManager;
@@ -8,9 +11,18 @@ public class Hotel {
 
     public Hotel(){
         financeManager = FinanceManager.getInstance();
+        reservationManager = ReservationManager.getInstance();
         numberManager = NumberManager.getInstance();
         personalManager = PersonalManager.getInstance();
-        reservationManager = ReservationManager.getInstance();
+        ReservationDAO reservationDAO = new ReservationDAO(HibernateUtil.getSessionFactory());
+        testData();
+    }
+
+    public void testData(){
+        financeManager.printAll();
+        reservationManager.printAll();
+        numberManager.printAll();
+        personalManager.printAll();
     }
 }
 

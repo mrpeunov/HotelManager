@@ -34,8 +34,8 @@
           <Menu mnemonicParsing="false" text="Сотрудники">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#newWorkerWindow" text="Создать сотрудника" />
-                  <MenuItem mnemonicParsing="false" text="Показать всех действующих сотрудников" />
-                  <MenuItem mnemonicParsing="false" text="Показать всех сотрудников" />
+                  <MenuItem mnemonicParsing="false" onAction="#showCurrentWorker" text="Показать всех действующих сотрудников" />
+                  <MenuItem mnemonicParsing="false" onAction="#showAllWorker" text="Показать всех сотрудников" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Финансы">

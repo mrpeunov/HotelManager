@@ -1,6 +1,10 @@
 package ru.peunov.model;
 
+import org.hibernate.annotations.Cascade;
+import ru.peunov.HibernateUtil;
+import ru.peunov.dao.ReservationDAO;
 import ru.peunov.enums.NumberClass;
+import ru.peunov.exception.NoReservationException;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -32,9 +36,12 @@ public abstract class Number {
     @Transient
     Hybridism hybridism;
 
-    @OneToMany(mappedBy = "number")
+    @OneToMany(mappedBy = "number", fetch = FetchType.EAGER)
     private List<Reservation> allReservation;
 
+    public Number() {
+
+    }
 
     public int getCapacity() {
         return capacity;
@@ -53,20 +60,22 @@ public abstract class Number {
     }
 
     public boolean isFree(Reservation reservation) {
-        return hybridism.isFree(reservation, allReservation);
+        return hybridism.isFree(reservation, this);
     }
 
     public NumberClass getNumberClass() {
         return numberClass;
     }
 
+    public void setNumberClass(NumberClass numberClass) {
+        this.numberClass = numberClass;
+    }
 
-    public void addReservation(Reservation reservation) throws Exception {
-        if(this.isFree(reservation)){
-            allReservation.add(reservation);
-        } else {
-            throw new Exception("Number isn't free");
-        }
+    public void addReservation(Reservation reservation)  {
+        reservation.setNumber(this);
+        allReservation.add(reservation);
+        ReservationDAO reservationDAO = new ReservationDAO(HibernateUtil.getSessionFactory());
+        reservationDAO.create(reservation);
     }
 
     @Override
@@ -75,10 +84,21 @@ public abstract class Number {
                 "id=" + id +
                 ", capacity=" + capacity +
                 ", price=" + price +
+                ", reservation + " + allReservation.size() +
                 '}';
+    }
+
+    public List<Reservation> getAllReservation() {
+        return allReservation;
+    }
+
+    public void setAllReservation(List<Reservation> allReservation) {
+        this.allReservation = allReservation;
     }
 
     public long getId() {
         return id;
     }
+
+
 }

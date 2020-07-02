@@ -21,4 +21,11 @@ public enum Position {
         }
         return result;
     }
+
+    public static String getString(Position position){
+        if(position == ADMINISTRATOR) return "Администратор";
+        if(position == MAID) return "Горничная";
+        if(position == PLUMBER) return "Сантехник";
+        return "Охранник";
+    }
 }

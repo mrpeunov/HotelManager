@@ -63,7 +63,7 @@
                 <String fx:value="Администратор" />
                 <String fx:value="Охранник" />
                 <String fx:value="Сантехник" />
-                <String fx:value="Гоничная" />
+                <String fx:value="Горничная" />
             </ChoiceBox>
             <TextField fx:id="fio" prefHeight="26.0" prefWidth="353.0" GridPane.columnIndex="1">
                <GridPane.margin>

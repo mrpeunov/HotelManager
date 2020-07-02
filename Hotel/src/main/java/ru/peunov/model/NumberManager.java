@@ -10,9 +10,9 @@ import ru.peunov.enums.NumberClass;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import java.util.List;
+import java.util.*;
 
-public class NumberManager {
+public class NumberManager implements Manager {
     /**
      * Using Pattern Singleton
      */
@@ -30,6 +30,15 @@ public class NumberManager {
             criteriaQuery.select(root);
             Query<Number> q = session.createQuery(criteriaQuery);
             numbers = q.getResultList();
+            for(Number number : numbers){
+                number.setAllReservation(ReservationManager.getInstance().getReservationForNumber(number.getId()));
+            }
+            Collections.sort(numbers, new Comparator<Number>() {
+                @Override
+                public int compare(Number lhs, Number rhs) {
+                    return lhs.getId() < rhs.getId() ? -1 : (lhs.getId() > rhs.getId()) ? 1 : 0;
+                }
+            });
             session.close();
 
         } catch (Exception e){
@@ -37,6 +46,14 @@ public class NumberManager {
             e.printStackTrace();
         }
     };
+
+    public void printAll(){
+        System.out.println("Номера");
+        for(Number number : numbers){
+            System.out.println(number.toString());
+        }
+        System.out.println("");
+    }
 
     public static NumberManager getInstance(){
         if(numberManager == null){
@@ -75,7 +92,21 @@ public class NumberManager {
         return numbers;
     }
 
-    public static void update(){
-        numberManager = new NumberManager();
+    public static void update(){ numberManager = new NumberManager(); }
+
+    public void updateNumber(long id, int capacity, int price, NumberClass numberClass){
+        NumberDAO numberDAO = new NumberDAO(HibernateUtil.getSessionFactory());
+        Number number = numberDAO.read(id);
+        number.setPrice(price);
+        number.setCapacity(capacity);
+        number.setNumberClass(numberClass);
+        numberDAO.saveOrUpdate(number);
+        update();
+    }
+
+    public void deleteNumber(long id){
+        NumberDAO numberDAO = new NumberDAO(HibernateUtil.getSessionFactory());
+        numberDAO.delete(numberDAO.read(id));
+        update();
     }
 }

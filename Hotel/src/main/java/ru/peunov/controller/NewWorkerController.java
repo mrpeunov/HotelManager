@@ -18,9 +18,7 @@ import java.util.ResourceBundle;
 
 
 public class NewWorkerController implements Initializable {
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }
+    public void initialize(URL location, ResourceBundle resources) {}
 
     @FXML
     private TextField fio;

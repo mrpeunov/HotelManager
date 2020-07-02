@@ -53,6 +53,5 @@ public class NewNumberController implements Initializable {
         } catch (Exception e){
             e.printStackTrace();
         }
-
     }
 }

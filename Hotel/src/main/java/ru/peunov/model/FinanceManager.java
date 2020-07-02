@@ -1,9 +1,12 @@
 package ru.peunov.model;
 
-public class FinanceManager {
+import ru.peunov.controller.MainController;
+
+public class FinanceManager implements Manager {
     /**
      * Using Pattern Singleton
      */
+
     private static FinanceManager financeManager;
 
     private FinanceManager() {
@@ -15,5 +18,9 @@ public class FinanceManager {
             financeManager = new FinanceManager();
         }
         return financeManager;
+    }
+
+    public void printAll(){
+        System.out.println("Empty");
     }
 }

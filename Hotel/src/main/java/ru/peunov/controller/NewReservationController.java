@@ -10,6 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import ru.peunov.enums.NumberClass;
+import ru.peunov.exception.NoReservationException;
 import ru.peunov.model.Reservation;
 import ru.peunov.model.ReservationManager;
 import ru.peunov.model.Resident;
@@ -145,12 +146,13 @@ public class NewReservationController implements Initializable {
 
             if(start.before(finish)){
                 NumberClass numberClass = NumberClass.parseNumberClass(choiceNumber.getValue());
-                Reservation reservation = new Reservation(residents, start, finish);
+                Reservation reservation = new Reservation(residents, start, finish, numberClass);
                 ReservationManager reservationManager = ReservationManager.getInstance();
-                Boolean flag = reservationManager.addReservation(reservation, numberClass);
-                if(flag){
+                try {
+                    reservationManager.addReservation(reservation);
                     stage.close();
-                } else {
+                } catch (NoReservationException e){
+                    e.printStackTrace();
                     status.setText("В данные даты нет свободных номеров данного типа");
                 }
             }

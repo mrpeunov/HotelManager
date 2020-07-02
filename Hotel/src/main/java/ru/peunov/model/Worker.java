@@ -24,21 +24,20 @@ public class Worker {
     @GeneratedValue(strategy= GenerationType.TABLE)
     private long id;
 
-    @Column(name = "name", length = 100, nullable = false)
+    @Column(name = "name", length = 100)
     private String name;
 
     @Column(name = "salary", nullable = false)
     private int salary;
 
-    @Column(name = "position", nullable = false)
+    @Column(name = "position")
     @Enumerated(EnumType.ORDINAL)
     private Position position;
 
-    @OneToMany(mappedBy = "worker")
-    @Cascade(value=org.hibernate.annotations.CascadeType.ALL)
-    private List<Salary> allSalary = new ArrayList<Salary>();
+    @OneToMany(mappedBy = "worker", fetch = FetchType.EAGER)
+    private List<Salary> allSalary;
 
-    @Column(name = "status", nullable = false)
+    @Column(name = "status")
     @Enumerated(EnumType.ORDINAL)
     private Status status;
 
@@ -47,6 +46,7 @@ public class Worker {
         this.salary = salary;
         this.position = position;
         this.status = Status.WORKED;
+        this.allSalary = new ArrayList<Salary>();
     }
 
     public String getName() {
@@ -81,6 +81,9 @@ public class Worker {
         this.status = status;
     }
 
+    public long getId() {
+        return id;
+    }
 
     public Worker() { }
 
@@ -92,14 +95,25 @@ public class Worker {
 
     public void giveSalary(){
         allSalary.add(new Salary(salary, this));
+        updateSalary();
     };
 
     public void updateSalary(){
-        for(Salary salary : allSalary){
-            SalaryDAO salaryDAO = new SalaryDAO(HibernateUtil.getSessionFactory());
-            salaryDAO.saveOrUpdate(salary);
+        try {
+            for (Salary salary : allSalary) {
+                SalaryDAO salaryDAO = new SalaryDAO(HibernateUtil.getSessionFactory());
+                salaryDAO.saveOrUpdate(salary);
+            }
+        } catch (Exception e) {
+            System.out.println("Здесь происходит что-то непонятное и с этим надо разобраться");
+            e.printStackTrace();
         }
     }
+
+    /**
+     * ОТЛДАДИТЬ ЭТУ ХРЕНЬ СВЕРХУ
+     * 
+     */
 
     @Override
     public String toString() {
@@ -107,7 +121,7 @@ public class Worker {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", salary=" + salary +
-                ", allSalarySize =" + (allSalary == null) +
+                ", allSalarySize = " + allSalary.size() +
                 ", position=" + position +
                 ", status=" + status +
                 '}';

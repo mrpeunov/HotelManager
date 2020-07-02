@@ -16,7 +16,7 @@ public class Resident {
     @Column(name = "contact")
     private String contact;
 
-    @ManyToOne
+    @ManyToOne(optional = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "reservation_id")
     private Reservation reservation;
 

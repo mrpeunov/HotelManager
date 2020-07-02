@@ -12,5 +12,7 @@ public class ReservationDAO extends DAO<Reservation>{
     Class<Reservation> myGetClass() {
         return Reservation.class;
     }
-    public void updateAll(Reservation reservation) { }
+    public void updateAll(Reservation reservation) {
+        reservation.updateResidents();
+    }
 }
