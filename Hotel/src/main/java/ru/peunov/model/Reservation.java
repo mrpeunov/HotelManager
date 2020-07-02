@@ -5,6 +5,7 @@ import ru.peunov.HibernateUtil;
 import ru.peunov.dao.ReservationDAO;
 import ru.peunov.dao.ResidentDAO;
 import ru.peunov.enums.NumberClass;
+import ru.peunov.enums.ReservationStatus;
 import ru.peunov.model.Number;
 import ru.peunov.model.Resident;
 
@@ -19,7 +20,7 @@ public class Reservation {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy= GenerationType.TABLE)
-    private int id;
+    private long id;
 
     @OneToMany(mappedBy = "reservation", fetch = FetchType.EAGER)
     private List<Resident> residents;
@@ -40,13 +41,25 @@ public class Reservation {
     @Temporal(TemporalType.DATE)
     private Calendar finish;
 
+    @Column(name = "comment")
+    private String comment;
+
+    @Column(name = "status")
+    @Enumerated(EnumType.ORDINAL)
+    private ReservationStatus reservationStatus;
+
     public Reservation(){}
 
-    public Reservation(List<Resident> residents, Calendar start, Calendar finish, NumberClass numberClass) {
+    public Reservation(List<Resident> residents, Calendar start, Calendar finish, NumberClass numberClass, String comment) {
         this.numberClass = numberClass;
         this.residents = residents;
+        for(Resident resident : this.residents){
+            resident.setReservation(this);
+        }
         this.start = start;
         this.finish = finish;
+        this.comment = comment;
+        this.reservationStatus = ReservationStatus.CURRENT;
     }
 
     public void updateResidents(){
@@ -96,14 +109,33 @@ public class Reservation {
         this.finish = finish;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
+    public ReservationStatus getReservationStatus() {
+        return reservationStatus;
+    }
 
+    public void setReservationStatus(ReservationStatus reservationStatus) {
+        this.reservationStatus = reservationStatus;
+    }
 
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "id=" + id +
+                ", residents=" + residents.size() +
+                ", number=" + number +
+                ", numberClass=" + numberClass +
+                ", start=" + start.getTime() +
+                ", finish=" + finish.getTime() +
+                ", comment='" + comment + '\'' +
+                ", reservationStatus=" + reservationStatus +
+                '}';
+    }
 }

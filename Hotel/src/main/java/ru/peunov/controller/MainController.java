@@ -14,11 +14,13 @@ import ru.peunov.HibernateUtil;
 import ru.peunov.dao.NumberDAO;
 import ru.peunov.enums.NumberClass;
 import ru.peunov.enums.Position;
+import ru.peunov.enums.ReservationStatus;
 import ru.peunov.model.*;
 import ru.peunov.model.Number;
 
 import javax.swing.plaf.basic.BasicCheckBoxMenuItemUI;
 import java.net.URL;
+import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -110,7 +112,7 @@ public class MainController implements Initializable {
         showWorker(personal, true);
     }
 
-
+    @FXML
     public void showWorker(List<Worker> personal, boolean all){
         mainField.getChildren().clear();
         GridPane gridPane = new GridPane();
@@ -164,6 +166,7 @@ public class MainController implements Initializable {
         mainField.getChildren().add(gridPane);
     }
 
+    @FXML
     public void changeWorker(long id) {
         mainField.getChildren().clear();
         title.setText("");
@@ -185,6 +188,7 @@ public class MainController implements Initializable {
         }
     }
 
+    @FXML
     public void deleteWorker(long id, boolean all){
         System.out.println(id);
         PersonalManager personalManager = PersonalManager.getInstance();
@@ -293,5 +297,100 @@ public class MainController implements Initializable {
         NumberManager numberManager = NumberManager.getInstance();
         numberManager.deleteNumber(id);
         showAllNumber();
+    }
+
+    public void showCurrentReservations(){
+        System.out.println("GGGG");
+        ReservationManager reservationManager = ReservationManager.getInstance();
+        showReservations(reservationManager.getReservations(), false);
+    }
+
+    public void showReservations(List<Reservation> reservations, boolean all){
+        mainField.getChildren().clear();
+        GridPane gridPane = new GridPane();
+        int i = 0;
+        gridPane.getColumnConstraints().addAll(
+                new ColumnConstraints(100), new ColumnConstraints(100), new ColumnConstraints(150),
+                new ColumnConstraints(150), new ColumnConstraints(100), new ColumnConstraints(100),
+                new ColumnConstraints(150), new ColumnConstraints(100), new ColumnConstraints(100));
+
+        Label numberTop = new Label("Номер");
+        Label numberTypeTop = new Label("Тип");
+        Label startTop = new Label("Въезд");
+        Label finishTop = new Label("Выезд");
+        Label statusTop = new Label("Статус");
+        Label numberCountTop = new Label("Количество");
+
+        numberTop.setStyle("-fx-font-size: 18px;");
+        numberTypeTop.setStyle("-fx-font-size: 18px;");
+        startTop.setStyle("-fx-font-size: 18px;");
+        finishTop.setStyle("-fx-font-size: 18px;");
+        statusTop.setStyle("-fx-font-size: 18px;");
+        numberCountTop.setStyle("-fx-font-size: 18px;");
+
+        gridPane.add(numberTop, 0, i);
+        gridPane.add(numberTypeTop, 1, i);
+        gridPane.add(startTop, 2, i);
+        gridPane.add(finishTop, 3, i);
+        gridPane.add(statusTop, 4, i);
+        gridPane.add(numberCountTop, 5, i);
+
+
+        for(Reservation reservation : reservations){
+            i++;
+            gridPane.getRowConstraints().add(new RowConstraints(40));
+            Label number = new Label(String.valueOf(reservation.getNumber().getId()));
+            Label numberType = new Label(NumberClass.getString(reservation.getNumberClass()));
+            Calendar startDate = reservation.getStart();
+            Calendar finishDate = reservation.getFinish();
+            Label start = new Label( String.format("%02d.%02d.%02d", startDate.get(Calendar.DAY_OF_MONTH),
+                    startDate.get(Calendar.MONTH), startDate.get(Calendar.YEAR)));
+            Label finish = new Label(String.format("%02d.%02d.%02d", finishDate.get(Calendar.DAY_OF_MONTH),
+                    finishDate.get(Calendar.MONTH), finishDate.get(Calendar.YEAR)));
+            Label status = new Label(ReservationStatus.getString(reservation.getReservationStatus()));
+            Label numberCount = new Label(String.valueOf(reservation.getResidents().size()));
+
+            Button information = new Button("Информация");
+            Button change = new Button("Изменить");
+            Button delete = new Button("Удалить");
+
+            number.setStyle("-fx-font-size: 18px;");
+            numberType.setStyle("-fx-font-size: 18px;");
+            start.setStyle("-fx-font-size: 18px;");
+            finish.setStyle("-fx-font-size: 18px;");
+            status.setStyle("-fx-font-size: 18px;");
+            numberCount.setStyle("-fx-font-size: 18px;");
+
+            change.setOnAction(a -> changeReservation(reservation.getId()));
+            delete.setOnAction(a -> deleteReservation(reservation.getId(), all));
+            information.setOnAction(a -> informationReservation(reservation.getId()));
+
+            gridPane.setMargin(delete, new Insets(0, 0, 0, 20));
+
+            gridPane.add(number, 0, i);
+            gridPane.add(numberType, 1, i);
+            gridPane.add(start, 2, i);
+            gridPane.add(finish, 3, i);
+            gridPane.add(status, 4, i);
+            gridPane.add(numberCount, 5, i);
+            gridPane.add(information, 6, i);
+            gridPane.add(change, 7, i);
+            gridPane.add(delete, 8, i);
+        }
+
+        mainField.setMargin(gridPane, new Insets(0, 40, 0, 40));
+        mainField.getChildren().add(gridPane);
+    }
+
+    public void changeReservation(long id){
+        System.out.println("Изменить " + id);
+    }
+
+    public void deleteReservation(long id, boolean all){
+        System.out.println("Удалить " + id);
+    }
+
+    public void informationReservation(long id){
+        System.out.println("Информация " + id);
     }
 }

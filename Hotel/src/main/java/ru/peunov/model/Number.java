@@ -25,19 +25,19 @@ public abstract class Number {
     private long id;
 
     @Column(name = "capacity")
-    int capacity;
+    protected int capacity;
 
     @Column(name = "price")
-    int price;
+    protected int price;
 
     @Transient
-    NumberClass numberClass;
+    protected NumberClass numberClass;
 
     @Transient
-    Hybridism hybridism;
+    protected Hybridism hybridism;
 
     @OneToMany(mappedBy = "number", fetch = FetchType.EAGER)
-    private List<Reservation> allReservation;
+    protected List<Reservation> allReservation;
 
     public Number() {
 

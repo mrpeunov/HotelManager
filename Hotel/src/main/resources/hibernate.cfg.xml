@@ -25,5 +25,6 @@
         <mapping class="ru.peunov.model.Salary" />
         <mapping class="ru.peunov.model.Resident" />
         <mapping class="ru.peunov.model.Reservation" />
+        <mapping class="ru.peunov.model.Finance" />
     </session-factory>
 </hibernate-configuration>

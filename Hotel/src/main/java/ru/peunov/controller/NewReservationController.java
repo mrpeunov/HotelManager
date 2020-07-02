@@ -70,7 +70,7 @@ public class NewReservationController implements Initializable {
 
     public void newResident(){
         String stringFioGuest = fioGuest.getText();
-        String stringPhoneGuest = phoneGuest.getAccessibleHelp();
+        String stringPhoneGuest = phoneGuest.getText();
 
         if(stringFioGuest.isEmpty()){
             fioGuest.setStyle("-fx-border-color: red;");
@@ -143,16 +143,16 @@ public class NewReservationController implements Initializable {
             Calendar finish = Calendar.getInstance();
             finish.clear();
             finish.set(localDateFinish.getYear(), localDateFinish.getMonthValue()-1, localDateFinish.getDayOfMonth());
-
-            if(start.before(finish)){
+            finish.add(Calendar.HOUR, 1);
+            String myComment = comment.getText();
+            if(finish.after(start)){
                 NumberClass numberClass = NumberClass.parseNumberClass(choiceNumber.getValue());
-                Reservation reservation = new Reservation(residents, start, finish, numberClass);
+                Reservation reservation = new Reservation(residents, start, finish, numberClass, myComment);
                 ReservationManager reservationManager = ReservationManager.getInstance();
                 try {
                     reservationManager.addReservation(reservation);
                     stage.close();
                 } catch (NoReservationException e){
-                    e.printStackTrace();
                     status.setText("В данные даты нет свободных номеров данного типа");
                 }
             }

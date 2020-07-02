@@ -7,7 +7,7 @@ import java.util.List;
 
 public class HostelHybridism implements Hybridism {
     public boolean isFree(Reservation reservation, Number number){
-        //необходима реализация
+        System.out.println("Dont working Hostel Hybridism");
         return false;
     }
 }

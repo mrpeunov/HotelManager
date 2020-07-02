@@ -13,7 +13,6 @@ public class ClassicalHybridism implements Hybridism {
         if(requiredSize > currentSize){
             return false;
         } else {
-            System.out.println(number.getNumberClass());
             if(number.getNumberClass() == reservation.getNumberClass()){
                 List<Reservation> allReservation = number.getAllReservation();
                 if (allReservation.isEmpty()) { return true; }
@@ -25,7 +24,7 @@ public class ClassicalHybridism implements Hybridism {
                     Calendar start = reservation.getStart();
                     Calendar finish = reservation.getFinish();
 
-                    if(!(startReservation.after(finish) | finishReservation.before(start))) {bool = false;}
+                    if(!(startReservation.after(finish) | finishReservation.before(start))) { bool = false; }
                 }
                 return bool;
 

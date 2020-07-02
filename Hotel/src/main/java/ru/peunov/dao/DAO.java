@@ -18,9 +18,9 @@ public abstract class DAO<Entity> {
             Session session = factory.openSession();
             session.beginTransaction();
             session.save(entity);
-            this.updateAll(entity);
             session.getTransaction().commit();
             session.close();
+            this.updateAll(entity);
         } catch (Exception e){ System.out.println(e.toString());}
 
     }

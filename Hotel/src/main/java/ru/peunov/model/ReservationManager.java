@@ -1,15 +1,9 @@
 package ru.peunov.model;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
-import ru.peunov.HibernateUtil;
-import ru.peunov.enums.NumberClass;
-import ru.peunov.exception.NoReservationException;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import ru.peunov.HibernateUtil;
+import ru.peunov.dao.ReservationDAO;
+import ru.peunov.exception.NoReservationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,19 +15,8 @@ public class ReservationManager implements Manager {
     private List<Reservation> reservations;
 
     private ReservationManager() {
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        reservations = new ArrayList<Reservation>();
-        try{
-            Session session = sessionFactory.openSession();
-            session.beginTransaction();
-            CriteriaBuilder builder = session.getCriteriaBuilder();
-            CriteriaQuery<Reservation> criteriaQuery = builder.createQuery(Reservation.class);
-            Root<Reservation> root = criteriaQuery.from(Reservation.class);
-            criteriaQuery.select(root);
-            Query<Reservation> query = session.createQuery(criteriaQuery);
-            reservations = query.getResultList();
-            session.close();
-        } catch (Exception e){  e.printStackTrace();  System.out.println("QQQQQQQQQQ");}
+        ReservationDAO reservationDAO = new ReservationDAO(HibernateUtil.getSessionFactory());
+        reservations = reservationDAO.getAll();
     };
 
     public static ReservationManager getInstance(){
@@ -44,7 +27,11 @@ public class ReservationManager implements Manager {
     }
 
     public void printAll() {
-        System.out.println("Empty!!!");
+        System.out.println("Бронирования");
+        for(Reservation reservation : reservations){
+            System.out.println(reservation.toString());
+        }
+        System.out.println("");
     }
 
     public void addReservation(Reservation reservation) throws NoReservationException {
@@ -69,5 +56,13 @@ public class ReservationManager implements Manager {
             }
         }
         return reservationsForNumber;
+    }
+
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
     }
 }
