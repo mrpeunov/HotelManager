@@ -100,5 +100,8 @@ public abstract class Number {
         return id;
     }
 
+    public int getCost(Reservation reservation){
+        return hybridism.getCost(reservation, this);
+    }
 
 }

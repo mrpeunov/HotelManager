@@ -22,6 +22,14 @@ public class Finance {
     @Temporal(TemporalType.DATE)
     private Calendar date;
 
+    public Finance(){}
+
+    public Finance(Boolean sign, int size){
+        this.sign = sign;
+        this.size = size;
+        date = Calendar.getInstance();
+    }
+
     public boolean isSign() {
         return sign;
     }
@@ -45,4 +53,24 @@ public class Finance {
     public void setDate(Calendar date) {
         this.date = date;
     }
+
+    @Override
+    public String toString() {
+        return "Finance{" +
+                "id=" + id +
+                ", sign=" + sign +
+                ", size=" + size +
+                ", date=" + date.getTime() +
+                '}';
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+
 }

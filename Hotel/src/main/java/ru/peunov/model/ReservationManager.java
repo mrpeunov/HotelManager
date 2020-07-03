@@ -80,8 +80,14 @@ public class ReservationManager implements Manager {
     public void updateStatus(long id, String str){
         ReservationDAO reservationDAO = new ReservationDAO(HibernateUtil.getSessionFactory());
         Reservation reservation = reservationDAO.read(id);
-        reservation.setReservationStatus(ReservationStatus.getReservationStatus(str));
+        ReservationStatus reservationStatus = ReservationStatus.getReservationStatus(str);
+        reservation.setReservationStatus(reservationStatus);
         reservationDAO.saveOrUpdate(reservation);
+        FinanceManager financeManager = FinanceManager.getInstance();
+        if(reservationStatus == ReservationStatus.PAID){
+            financeManager.addIncome(id);
+        }
+
         update();
     }
 }

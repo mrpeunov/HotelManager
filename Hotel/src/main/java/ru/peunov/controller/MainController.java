@@ -1,30 +1,21 @@
 package ru.peunov.controller;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.collections.ObservableListBase;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.*;
-import ru.peunov.HibernateUtil;
-import ru.peunov.dao.NumberDAO;
-import ru.peunov.dao.ReservationDAO;
 import ru.peunov.enums.NumberClass;
 import ru.peunov.enums.Position;
 import ru.peunov.enums.ReservationStatus;
 import ru.peunov.model.*;
 import ru.peunov.model.Number;
-
-import javax.swing.plaf.basic.BasicCheckBoxMenuItemUI;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.*;
 
 public class MainController implements Initializable {
@@ -100,24 +91,10 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    public void showCurrentWorker(){
-        title.setText("Текущие работники");
-        PersonalManager personalManager = PersonalManager.getInstance();
-        //поправить
-        List<Worker> personal = personalManager.getPersonal();
-        showWorker(personal, false);
-    }
-
-    @FXML
-    public void showAllWorker() {
-        title.setText("Все работники");
+    public void showWorker(){
+        title.setText("Персонал");
         PersonalManager personalManager = PersonalManager.getInstance();
         List<Worker> personal = personalManager.getPersonal();
-        showWorker(personal, true);
-    }
-
-    @FXML
-    public void showWorker(List<Worker> personal, boolean all){
         mainField.getChildren().clear();
         GridPane gridPane = new GridPane();
         int i = 0;
@@ -152,8 +129,8 @@ public class MainController implements Initializable {
             position.setStyle("-fx-font-size: 18px;");
             salary.setStyle("-fx-font-size: 18px;");
 
-            change.setOnAction(a -> changeWorker(worker.getId() ));
-            delete.setOnAction(a -> {deleteWorker(worker.getId(), all); });
+            change.setOnAction(a -> changeWorker(worker.getId()));
+            delete.setOnAction(a -> deleteWorker(worker.getId()));
             information.setOnAction(a -> informationWorker(worker.getId()));
 
             gridPane.setMargin(change, new Insets(0, 0, 0, 20));
@@ -193,13 +170,10 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    public void deleteWorker(long id, boolean all){
+    public void deleteWorker(long id){
         PersonalManager personalManager = PersonalManager.getInstance();
         personalManager.deleteWorker(id);
-        if(all) {
-            showAllWorker();
-            System.out.println("ggggggggggg");
-        }  else showCurrentWorker();
+        showWorker();
     }
 
     public void informationWorker(long id){
@@ -415,5 +389,239 @@ public class MainController implements Initializable {
 
     public void informationReservation(long id){
         System.out.println("Информация " + id);
+    }
+
+    public void giveSalary(){
+        PersonalManager personalManager = PersonalManager.getInstance();
+        personalManager.giveSalaryAll();
+    }
+
+    public void showProfit(){
+        title.setText("Прибыль");
+        mainField.getChildren().clear();
+        FinanceManager financeManager = FinanceManager.getInstance();
+        List<Finance> finances = financeManager.getFinances();
+
+        GridPane upPane = new GridPane();
+
+        Label startTitle = new Label("С: ");
+        DatePicker dateStart = new DatePicker();
+        Label finishTitle = new Label("До: ");
+        DatePicker dateFinish = new DatePicker();
+        Button button = new Button("Показать");
+        Label status = new Label("");
+
+        GridPane gridPane = new GridPane();
+
+        button.setOnAction(a -> {
+            gridPane.getChildren().clear();
+            LocalDate localDateStart = dateStart.getValue();
+            LocalDate localDateFinish = dateFinish.getValue();
+
+            try {
+                Calendar start = Calendar.getInstance();
+                start.clear();
+                start.set(localDateStart.getYear(), localDateStart.getMonthValue() - 1, localDateStart.getDayOfMonth());
+
+                Calendar finish = Calendar.getInstance();
+                finish.clear();
+                finish.set(localDateFinish.getYear(), localDateFinish.getMonthValue() - 1, localDateFinish.getDayOfMonth());
+                finish.add(Calendar.HOUR, 1);
+                if (finish.after(start) & finish != null & start != null) {
+                    start.add(Calendar.HOUR, -1);
+                    int profit = 0;
+                    int i = 0;
+                    gridPane.getColumnConstraints().addAll(new ColumnConstraints(150), new ColumnConstraints(200));
+                    Label sizeTitle = new Label("Размер");
+                    Label dateTitle = new Label("Дата");
+                    sizeTitle.setStyle("-fx-font-size: 18px;");
+                    dateTitle.setStyle("-fx-font-size: 18px;");
+                    gridPane.add(sizeTitle, 0, i);
+                    gridPane.add(dateTitle, 1, i);
+
+                    for (Finance finance : finances) {
+                        if (start.before(finance.getDate()) & finish.after(finance.getDate())) {
+                            if (finance.isSign()) profit += finance.getSize();
+                            else profit -= finance.getSize();
+
+                            i++;
+                            gridPane.getRowConstraints().add(new RowConstraints(40));
+                            String plus;
+                            if (finance.isSign()) plus = "+";
+                            else plus = "- ";
+                            Label size = new Label(plus + String.valueOf(finance.getSize()));
+
+                            Calendar thisDate = finance.getDate();
+                            Label date = new Label(String.format("%02d.%02d.%02d", thisDate.get(Calendar.DAY_OF_MONTH),
+                                    thisDate.get(Calendar.MONTH), thisDate.get(Calendar.YEAR)));
+
+                            size.setStyle("-fx-font-size: 18px;");
+                            date.setStyle("-fx-font-size: 18px;");
+
+                            gridPane.add(size, 0, i);
+                            gridPane.add(date, 1, i);
+                            mainField.setMargin(gridPane, new Insets(0, 40, 0, 40));
+                        }
+                    }
+                    if (profit > 0) status.setText("Прибыль равна: " + profit);
+                    else status.setText("Убыток равен: " + profit);
+
+                } else {
+                    status.setText("Начало позже конца");
+                }
+            } catch (NullPointerException e){
+                status.setText("Некорректно");
+            }
+        });
+
+        upPane.add(startTitle, 0, 0);
+        upPane.add(dateStart, 1, 0);
+        upPane.add(finishTitle, 2, 0);
+        upPane.add(dateFinish, 3, 0);
+        upPane.add(button, 4, 0);
+        upPane.add(status, 5, 0);
+
+        upPane.setMargin(startTitle, new Insets(5, 10, 0, 0));
+        upPane.setMargin(dateStart, new Insets(5, 20, 0, 0));
+        upPane.setMargin(finishTitle, new Insets(5, 10, 0, 0));
+        upPane.setMargin(dateFinish, new Insets(5, 40, 0, 0));
+        upPane.setMargin(button, new Insets(5, 20, 0, 0));
+
+        mainField.setMargin(upPane, new Insets(0, 40, 0, 40));
+        mainField.getChildren().add(upPane);
+        mainField.getChildren().add(gridPane);
+    }
+
+    public void showRevenue(){
+        title.setText("Выручка");
+        mainField.getChildren().clear();
+        FinanceManager financeManager = FinanceManager.getInstance();
+        List<Finance> finances = financeManager.getFinances();
+
+        GridPane upPane = new GridPane();
+
+        Label startTitle = new Label("С: ");
+        DatePicker dateStart = new DatePicker();
+        Label finishTitle = new Label("До: ");
+        DatePicker dateFinish = new DatePicker();
+        Button button = new Button("Показать");
+        Label status = new Label("");
+
+        GridPane gridPane = new GridPane();
+
+        button.setOnAction(a -> {
+            gridPane.getChildren().clear();
+            LocalDate localDateStart = dateStart.getValue();
+            LocalDate localDateFinish = dateFinish.getValue();
+
+            try {
+                Calendar start = Calendar.getInstance();
+                start.clear();
+                start.set(localDateStart.getYear(), localDateStart.getMonthValue() - 1, localDateStart.getDayOfMonth());
+
+                Calendar finish = Calendar.getInstance();
+                finish.clear();
+                finish.set(localDateFinish.getYear(), localDateFinish.getMonthValue() - 1, localDateFinish.getDayOfMonth());
+                finish.add(Calendar.HOUR, 1);
+                if (finish.after(start) & finish != null & start != null) {
+                    start.add(Calendar.HOUR, -1);
+                    int profit = 0;
+                    int i = 0;
+                    gridPane.getColumnConstraints().addAll(new ColumnConstraints(150), new ColumnConstraints(200));
+                    Label sizeTitle = new Label("Размер");
+                    Label dateTitle = new Label("Дата");
+                    sizeTitle.setStyle("-fx-font-size: 18px;");
+                    dateTitle.setStyle("-fx-font-size: 18px;");
+                    gridPane.add(sizeTitle, 0, i);
+                    gridPane.add(dateTitle, 1, i);
+
+                    for (Finance finance : finances) {
+                        if (start.before(finance.getDate()) & finish.after(finance.getDate()) & finance.isSign()) {
+                            profit += finance.getSize();
+                            i++;
+                            gridPane.getRowConstraints().add(new RowConstraints(40));
+                            String plus;
+                            if (finance.isSign()) plus = "+";
+                            else plus = "- ";
+                            Label size = new Label(plus + String.valueOf(finance.getSize()));
+
+                            Calendar thisDate = finance.getDate();
+                            Label date = new Label(String.format("%02d.%02d.%02d", thisDate.get(Calendar.DAY_OF_MONTH),
+                                    thisDate.get(Calendar.MONTH), thisDate.get(Calendar.YEAR)));
+
+                            size.setStyle("-fx-font-size: 18px;");
+                            date.setStyle("-fx-font-size: 18px;");
+
+                            gridPane.add(size, 0, i);
+                            gridPane.add(date, 1, i);
+                            mainField.setMargin(gridPane, new Insets(0, 40, 0, 40));
+                        }
+                    }
+                    if (profit > 0) status.setText("Выручка равна: " + profit);
+
+                } else {
+                    status.setText("Начало позже конца");
+                }
+            } catch (NullPointerException e){
+                status.setText("Некорректно");
+            }
+        });
+
+        upPane.add(startTitle, 0, 0);
+        upPane.add(dateStart, 1, 0);
+        upPane.add(finishTitle, 2, 0);
+        upPane.add(dateFinish, 3, 0);
+        upPane.add(button, 4, 0);
+        upPane.add(status, 5, 0);
+
+        upPane.setMargin(startTitle, new Insets(5, 10, 0, 0));
+        upPane.setMargin(dateStart, new Insets(5, 20, 0, 0));
+        upPane.setMargin(finishTitle, new Insets(5, 10, 0, 0));
+        upPane.setMargin(dateFinish, new Insets(5, 40, 0, 0));
+        upPane.setMargin(button, new Insets(5, 20, 0, 0));
+
+        mainField.setMargin(upPane, new Insets(0, 40, 0, 40));
+        mainField.getChildren().add(upPane);
+        mainField.getChildren().add(gridPane);
+    }
+
+    public void showAllFinance(){
+        title.setText("Сводка");
+        mainField.getChildren().clear();
+        FinanceManager financeManager = FinanceManager.getInstance();
+        List<Finance> finances = financeManager.getFinances();
+        GridPane gridPane = new GridPane();
+        int i = 0;
+        gridPane.getColumnConstraints().addAll(new ColumnConstraints(150), new ColumnConstraints(200));
+
+        Label sizeTitle = new Label("Размер");
+        Label dateTitle = new Label("Дата");
+
+        sizeTitle.setStyle("-fx-font-size: 18px;");
+        dateTitle.setStyle("-fx-font-size: 18px;");
+
+        gridPane.add(sizeTitle, 0, i);
+        gridPane.add(dateTitle, 1, i);
+
+        for(Finance finance : finances){
+            i++;
+            gridPane.getRowConstraints().add(new RowConstraints(40));
+            String plus;
+            if(finance.isSign()) plus = "+";
+            else plus = "- ";
+            Label size = new Label(plus + String.valueOf(finance.getSize()));
+
+            Calendar thisDate = finance.getDate();
+            Label date = new Label(String.format("%02d.%02d.%02d", thisDate.get(Calendar.DAY_OF_MONTH),
+                    thisDate.get(Calendar.MONTH), thisDate.get(Calendar.YEAR)));
+
+            size.setStyle("-fx-font-size: 18px;");
+            date.setStyle("-fx-font-size: 18px;");
+
+            gridPane.add(size, 0, i);
+            gridPane.add(date, 1, i);
+        }
+        mainField.setMargin(gridPane, new Insets(0, 40, 0, 40));
+        mainField.getChildren().add(gridPane);
     }
 }

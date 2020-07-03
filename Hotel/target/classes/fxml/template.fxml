@@ -33,16 +33,16 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Сотрудники">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#newWorkerWindow" text="Создать сотрудника" />
-                  <MenuItem mnemonicParsing="false" onAction="#showCurrentWorker" text="Показать всех действующих сотрудников" />
-                  <MenuItem mnemonicParsing="false" onAction="#showAllWorker" text="Показать всех сотрудников" />
+                <MenuItem mnemonicParsing="false" onAction="#newWorkerWindow" text="Создать сотрудника" />
+                <MenuItem mnemonicParsing="false" onAction="#showWorker" text="Показать сотрудников" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Финансы">
               <items>
-                <MenuItem mnemonicParsing="false" text="Показать сводку" />
-                  <MenuItem mnemonicParsing="false" text="Получить данные о прибыли" />
-                  <MenuItem mnemonicParsing="false" text="Получить данные о выручке" />
+                  <MenuItem mnemonicParsing="false" onAction="#giveSalary" text="Выдать зарплату всем сотрудникам" />
+                  <MenuItem mnemonicParsing="false" onAction="#showAllFinance" text="Показать сводку" />
+                  <MenuItem mnemonicParsing="false" onAction="#showProfit" text="Получить данные о прибыли" />
+                  <MenuItem mnemonicParsing="false" onAction="#showRevenue" text="Получить данные о выручке" />
               </items>
             </Menu>
         </menus>

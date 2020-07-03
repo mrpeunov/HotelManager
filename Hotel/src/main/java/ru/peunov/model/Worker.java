@@ -94,8 +94,11 @@ public class Worker {
     }
 
     public void giveSalary(){
-        allSalary.add(new Salary(salary, this));
+        Salary newSalary = new Salary(salary, this);
+        allSalary.add(newSalary);
         updateSalary();
+        FinanceManager financeManager = FinanceManager.getInstance();
+        financeManager.addConsumption(newSalary);
     };
 
     public void updateSalary(){
@@ -105,15 +108,9 @@ public class Worker {
                 salaryDAO.saveOrUpdate(salary);
             }
         } catch (Exception e) {
-            System.out.println("Здесь происходит что-то непонятное и с этим надо разобраться");
             e.printStackTrace();
         }
     }
-
-    /**
-     * ОТЛДАДИТЬ ЭТУ ХРЕНЬ СВЕРХУ
-     * 
-     */
 
     @Override
     public String toString() {
@@ -126,19 +123,4 @@ public class Worker {
                 ", status=" + status +
                 '}';
     }
-    /*
-
-    public void dismiss(){
-        status = Status.DISMISSED;
-    };
-
-    public void giveAction(Action action) {};
-
-    public int getSalary() {
-        return salary;
-    }
-
-    public void setSalary(int salary) {
-        this.salary = salary;
-    }*/
 }

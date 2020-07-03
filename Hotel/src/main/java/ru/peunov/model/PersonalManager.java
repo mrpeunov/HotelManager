@@ -1,20 +1,10 @@
 package ru.peunov.model;
 
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 import ru.peunov.HibernateUtil;
 import ru.peunov.dao.SalaryDAO;
 import ru.peunov.dao.WorkerDAO;
 import ru.peunov.enums.Position;
-
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
 
 public class PersonalManager implements Manager {
     /*
@@ -49,7 +39,6 @@ public class PersonalManager implements Manager {
 
 
     public static void update(){
-        System.out.println("mm");
         personalManager = new PersonalManager();
     }
 
@@ -77,10 +66,17 @@ public class PersonalManager implements Manager {
     public void deleteWorker(long id){
         WorkerDAO workerDAO = new WorkerDAO(HibernateUtil.getSessionFactory());
         workerDAO.delete(workerDAO.read(id));
+        //исправить
         update();
     }
 
     public void setPersonal(List<Worker> personal) {
         this.personal = personal;
+    }
+
+    public void giveSalaryAll(){
+        for(Worker worker : personal){
+            worker.giveSalary();
+        }
     }
 }

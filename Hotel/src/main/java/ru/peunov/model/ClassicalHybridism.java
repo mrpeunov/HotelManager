@@ -7,7 +7,6 @@ import java.util.List;
 
 public class ClassicalHybridism implements Hybridism {
     public boolean isFree(Reservation reservation, Number number){
-
         int requiredSize = reservation.getResidents().size();
         int currentSize = number.getCapacity();
         if(requiredSize > currentSize){
@@ -30,5 +29,17 @@ public class ClassicalHybridism implements Hybridism {
 
             } else return false;
         }
+    }
+
+    public int getCost(Reservation reservation, Number number){
+        Calendar start = reservation.getStart();
+        Calendar finish = reservation.getFinish();
+        long startTime = start.getTimeInMillis();
+        long finishTime = finish.getTimeInMillis();
+        long delta = finishTime - startTime;
+        int days = (int)(delta / (24 * 60 * 60 * 1000));
+        days += 1;
+        int price = number.getPrice();
+        return price * days;
     }
 }

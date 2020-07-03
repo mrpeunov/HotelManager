@@ -11,4 +11,5 @@ public interface Hybridism {
      * Implementation pattern Strategy
      */
     public boolean isFree(Reservation reservation, Number number);
+    public int getCost(Reservation reservation, Number number);
 }
