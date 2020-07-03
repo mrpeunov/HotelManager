@@ -25,7 +25,7 @@ public class Reservation {
     @OneToMany(mappedBy = "reservation", fetch = FetchType.EAGER)
     private List<Resident> residents;
 
-    @ManyToOne(optional = true, cascade = CascadeType.ALL)
+    @ManyToOne(optional = true)
     @JoinColumn(name = "number_id")
     private Number number;
 
@@ -65,7 +65,7 @@ public class Reservation {
     public void updateResidents(){
         ResidentDAO residentDAO = new ResidentDAO(HibernateUtil.getSessionFactory());
         for(Resident resident : residents){
-            residentDAO.create(resident);
+            residentDAO.saveOrUpdate(resident);
         }
     }
 

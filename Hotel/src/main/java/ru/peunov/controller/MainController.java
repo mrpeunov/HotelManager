@@ -1,17 +1,22 @@
 package ru.peunov.controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.ObservableListBase;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 import javafx.stage.*;
 import ru.peunov.HibernateUtil;
 import ru.peunov.dao.NumberDAO;
+import ru.peunov.dao.ReservationDAO;
 import ru.peunov.enums.NumberClass;
 import ru.peunov.enums.Position;
 import ru.peunov.enums.ReservationStatus;
@@ -20,9 +25,7 @@ import ru.peunov.model.Number;
 
 import javax.swing.plaf.basic.BasicCheckBoxMenuItemUI;
 import java.net.URL;
-import java.util.Calendar;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class MainController implements Initializable {
 
@@ -59,6 +62,7 @@ public class MainController implements Initializable {
     @FXML
     public void newReservationWindow(){
         mainField.getChildren().clear();
+        title.setText("");
         try{
             Stage dialogWindow = new Stage();
             NewReservationController.setStage(dialogWindow);
@@ -190,7 +194,6 @@ public class MainController implements Initializable {
 
     @FXML
     public void deleteWorker(long id, boolean all){
-        System.out.println(id);
         PersonalManager personalManager = PersonalManager.getInstance();
         personalManager.deleteWorker(id);
         if(all) {
@@ -299,10 +302,24 @@ public class MainController implements Initializable {
         showAllNumber();
     }
 
-    public void showCurrentReservations(){
-        System.out.println("GGGG");
+    public void showAllReservations(){
         ReservationManager reservationManager = ReservationManager.getInstance();
-        showReservations(reservationManager.getReservations(), false);
+        showReservations(reservationManager.getReservations(), true);
+        title.setText("Все бронирования");
+    }
+
+    public void showCurrentReservations(){
+        ReservationManager reservationManager = ReservationManager.getInstance();
+        List<Reservation> reservations = reservationManager.getReservations();
+        List<Reservation> currentReservations = new ArrayList<Reservation>();
+        for(Reservation reservation : reservations){
+            if(reservation.getReservationStatus() == ReservationStatus.CURRENT |
+                reservation.getReservationStatus() == ReservationStatus.PAID){
+                currentReservations.add(reservation);
+            }
+        }
+        showReservations(currentReservations, false);
+        title.setText("Текущие бронирования");
     }
 
     public void showReservations(List<Reservation> reservations, boolean all){
@@ -310,9 +327,9 @@ public class MainController implements Initializable {
         GridPane gridPane = new GridPane();
         int i = 0;
         gridPane.getColumnConstraints().addAll(
-                new ColumnConstraints(100), new ColumnConstraints(100), new ColumnConstraints(150),
-                new ColumnConstraints(150), new ColumnConstraints(100), new ColumnConstraints(100),
-                new ColumnConstraints(150), new ColumnConstraints(100), new ColumnConstraints(100));
+                new ColumnConstraints(80), new ColumnConstraints(100), new ColumnConstraints(150),
+                new ColumnConstraints(150), new ColumnConstraints(190), new ColumnConstraints(150),
+                new ColumnConstraints(120), new ColumnConstraints(100));
 
         Label numberTop = new Label("Номер");
         Label numberTypeTop = new Label("Тип");
@@ -347,21 +364,21 @@ public class MainController implements Initializable {
                     startDate.get(Calendar.MONTH), startDate.get(Calendar.YEAR)));
             Label finish = new Label(String.format("%02d.%02d.%02d", finishDate.get(Calendar.DAY_OF_MONTH),
                     finishDate.get(Calendar.MONTH), finishDate.get(Calendar.YEAR)));
-            Label status = new Label(ReservationStatus.getString(reservation.getReservationStatus()));
+
             Label numberCount = new Label(String.valueOf(reservation.getResidents().size()));
 
+            ChoiceBox<String> status = new ChoiceBox<String>(FXCollections.observableArrayList("Забронировано", "Отмена", "Оплачено", "Закрыто"));
+            status.setValue(ReservationStatus.getString(reservation.getReservationStatus()));
             Button information = new Button("Информация");
-            Button change = new Button("Изменить");
             Button delete = new Button("Удалить");
 
             number.setStyle("-fx-font-size: 18px;");
             numberType.setStyle("-fx-font-size: 18px;");
             start.setStyle("-fx-font-size: 18px;");
             finish.setStyle("-fx-font-size: 18px;");
-            status.setStyle("-fx-font-size: 18px;");
             numberCount.setStyle("-fx-font-size: 18px;");
 
-            change.setOnAction(a -> changeReservation(reservation.getId()));
+            status.setOnAction(a -> newReservationStatus(reservation.getId(), status.getValue(), all));
             delete.setOnAction(a -> deleteReservation(reservation.getId(), all));
             information.setOnAction(a -> informationReservation(reservation.getId()));
 
@@ -374,20 +391,26 @@ public class MainController implements Initializable {
             gridPane.add(status, 4, i);
             gridPane.add(numberCount, 5, i);
             gridPane.add(information, 6, i);
-            gridPane.add(change, 7, i);
-            gridPane.add(delete, 8, i);
+            gridPane.add(delete, 7, i);
         }
 
         mainField.setMargin(gridPane, new Insets(0, 40, 0, 40));
         mainField.getChildren().add(gridPane);
     }
 
-    public void changeReservation(long id){
-        System.out.println("Изменить " + id);
+    public void newReservationStatus(long id, String str, boolean all){
+        System.out.println(str + " " + id);
+        ReservationManager reservationManager = ReservationManager.getInstance();
+        reservationManager.updateStatus(id, str);
+        if(all) showAllReservations();
+        else showCurrentReservations();
     }
 
     public void deleteReservation(long id, boolean all){
-        System.out.println("Удалить " + id);
+        ReservationManager reservationManager = ReservationManager.getInstance();
+        reservationManager.deleteReservation(id);
+        if(all) showAllReservations();
+        else showCurrentReservations();
     }
 
     public void informationReservation(long id){

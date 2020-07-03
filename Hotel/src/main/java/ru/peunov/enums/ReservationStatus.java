@@ -8,4 +8,11 @@ public enum ReservationStatus {
         if(reservationStatus == PAID) return "Оплачено";
         return "Закрыто";
     }
+
+    public static ReservationStatus getReservationStatus(String str) {
+        if (str.equals("Забронировано")) return CURRENT;
+        if (str.equals("Отмена")) return CANCEL;
+        if (str.equals("Оплачено")) return PAID;
+        return CLOSE;
+    }
 }

@@ -19,7 +19,7 @@ import java.util.Queue;
 public class PersonalManager implements Manager {
     /*
     * Using pattern Singleton
-    **/
+    */
     private static PersonalManager personalManager;
     private List<Worker> personal;
     private List<Salary> salaries;
@@ -30,20 +30,6 @@ public class PersonalManager implements Manager {
 
         personal = workerDAO.getAll();
         salaries = salaryDAO.getAll();
-
-
-
-
-        /*
-        for(Salary salary : salaries){
-            System.out.println(salary.getSize() + salary.getWorker().getId());
-        }
-        for(Worker worker : personal){
-            worker.giveSalary();
-        }
-         */
-
-
     };
 
     public static PersonalManager getInstance(){
@@ -80,7 +66,6 @@ public class PersonalManager implements Manager {
         worker.setPosition(position);
         worker.setName(name);
         worker.setSalary(salary);
-        System.out.println("hello");
         workerDAO.saveOrUpdate(worker);
         update();
     }
@@ -92,7 +77,6 @@ public class PersonalManager implements Manager {
     public void deleteWorker(long id){
         WorkerDAO workerDAO = new WorkerDAO(HibernateUtil.getSessionFactory());
         workerDAO.delete(workerDAO.read(id));
-        System.out.println("Здарова");
         update();
     }
 

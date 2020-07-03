@@ -3,6 +3,7 @@ package ru.peunov.model;
 
 import ru.peunov.HibernateUtil;
 import ru.peunov.dao.ReservationDAO;
+import ru.peunov.enums.ReservationStatus;
 import ru.peunov.exception.NoReservationException;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,5 +65,23 @@ public class ReservationManager implements Manager {
 
     public void setReservations(List<Reservation> reservations) {
         this.reservations = reservations;
+    }
+
+    public void deleteReservation(long id){
+        ReservationDAO reservationDAO = new ReservationDAO(HibernateUtil.getSessionFactory());
+        reservationDAO.delete(reservationDAO.read(id));
+        update();
+    }
+
+    private void update(){
+        reservationManager = new ReservationManager();
+    }
+
+    public void updateStatus(long id, String str){
+        ReservationDAO reservationDAO = new ReservationDAO(HibernateUtil.getSessionFactory());
+        Reservation reservation = reservationDAO.read(id);
+        reservation.setReservationStatus(ReservationStatus.getReservationStatus(str));
+        reservationDAO.saveOrUpdate(reservation);
+        update();
     }
 }

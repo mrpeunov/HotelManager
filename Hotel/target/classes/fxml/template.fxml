@@ -20,8 +20,8 @@
           <Menu mnemonicParsing="false" text="Бронирования">
             <items>
                   <MenuItem mnemonicParsing="false" onAction="#newReservationWindow" text="Создать бронирование" />
-                  <MenuItem mnemonicParsing="false" text="Показать текущие бронирования" />
-                  <MenuItem mnemonicParsing="false" onAction="#showCurrentReservations" text="Показать все бронирования" />
+                  <MenuItem mnemonicParsing="false" onAction="#showCurrentReservations" text="Показать текущие бронирования" />
+                  <MenuItem mnemonicParsing="false" onAction="#showAllReservations" text="Показать все бронирования" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Номера">
