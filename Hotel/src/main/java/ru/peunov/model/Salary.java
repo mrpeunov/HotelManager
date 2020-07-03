@@ -16,6 +16,14 @@ public class Salary {
     @Column(name = "size")
     private int size;
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     @ManyToOne(optional = true, cascade = CascadeType.ALL)
     @JoinColumn(name="worker_id")
     private Worker worker;

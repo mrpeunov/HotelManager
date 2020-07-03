@@ -47,6 +47,7 @@ public class ReservationManager implements Manager {
             }
         }
         if(!flag) throw new NoReservationException("Not found free number");
+        else update();
     };
 
     public List<Reservation> getReservationForNumber(long id){
@@ -89,5 +90,15 @@ public class ReservationManager implements Manager {
         }
 
         update();
+    }
+
+    public Reservation getReservation(long id){
+        Reservation result = null;
+        for(Reservation reservation : reservations){
+            if(reservation.getId() == id){
+                result = reservation;
+            }
+        }
+        return result;
     }
 }

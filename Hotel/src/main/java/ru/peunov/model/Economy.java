@@ -3,6 +3,7 @@ package ru.peunov.model;
 import ru.peunov.enums.NumberClass;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 
 @Entity
 @DiscriminatorValue("EC")
@@ -12,6 +13,7 @@ public class Economy extends Number {
         this.price = price;
         hybridism = new ClassicalHybridism();
         numberClass = NumberClass.ECONOMY;
+        allReservation = new ArrayList<Reservation>();
     }
 
     public Economy(){

@@ -79,4 +79,14 @@ public class PersonalManager implements Manager {
             worker.giveSalary();
         }
     }
+
+    public Worker getWorker(long id){
+        Worker result = null;
+        for(Worker worker : personal){
+            if(worker.getId() == id){
+                result = worker;
+            }
+        }
+        return result;
+    }
 }

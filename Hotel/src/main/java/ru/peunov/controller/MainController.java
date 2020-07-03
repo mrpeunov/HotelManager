@@ -12,6 +12,7 @@ import javafx.stage.*;
 import ru.peunov.enums.NumberClass;
 import ru.peunov.enums.Position;
 import ru.peunov.enums.ReservationStatus;
+import ru.peunov.enums.Status;
 import ru.peunov.model.*;
 import ru.peunov.model.Number;
 import java.net.URL;
@@ -177,7 +178,72 @@ public class MainController implements Initializable {
     }
 
     public void informationWorker(long id){
+        System.out.println("Информация о работнике");
+        title.setText("Информация о работнике " + id);
+        mainField.getChildren().clear();
+        Worker worker = PersonalManager.getInstance().getWorker(id);
+        List<Salary> salaries = worker.getAllSalary();
 
+        GridPane gridPane = new GridPane();
+        int i = 0;
+        gridPane.getColumnConstraints().addAll(new ColumnConstraints(300),
+                new ColumnConstraints(150), new ColumnConstraints(200), new ColumnConstraints(200));
+
+        Label nameTitle = new Label("ФИО");
+        Label sizeTitle = new Label("Зарплата");
+        Label positionTitle = new Label("Должность");
+        Label statusTitle = new Label("Статус");
+
+        Label name = new Label(worker.getName());
+        Label size = new Label(String.valueOf(String.valueOf(worker.getSalary())));
+        Label position = new Label(Position.getString(worker.getPosition()));
+        Label status = new Label(Status.getString(worker.getStatus()));
+
+        gridPane.setStyle("-fx-font-size: 18px;");
+
+        gridPane.add(nameTitle, 0, 0);
+        gridPane.add(sizeTitle, 1, 0);
+        gridPane.add(positionTitle, 2, 0);
+        gridPane.add(statusTitle, 3, 0);
+
+        gridPane.add(name, 0, 1);
+        gridPane.add(size, 1, 1);
+        gridPane.add(position, 2, 1);
+        gridPane.add(status, 3, 1);
+
+        GridPane peoplePane = new GridPane();
+        peoplePane.setStyle("-fx-font-size: 18px;");
+        peoplePane.getColumnConstraints().addAll(new ColumnConstraints(50),
+                new ColumnConstraints(200), new ColumnConstraints(200));
+
+        int j = 0;
+
+        Label numberTitle = new Label("№");
+        Label salarySizeTitle = new Label("Размер зарплаты");
+        Label dateTitle = new Label("Дата зарплаты");
+
+        peoplePane.add(numberTitle, 0, j);
+        peoplePane.add(salarySizeTitle, 1, j);
+        peoplePane.add(dateTitle, 2, j);
+
+        for(Salary salary : salaries){
+            j++;
+            Label number = new Label(String.valueOf(j));
+            Label salarySize = new Label(String.valueOf(salary.getSize()));
+
+            Calendar dateSalary = salary.getDate();
+            Label date = new Label(String.format("%02d.%02d.%02d", dateSalary.get(Calendar.DAY_OF_MONTH),
+                    dateSalary.get(Calendar.MONTH), dateSalary.get(Calendar.YEAR)));
+
+            peoplePane.add(number, 0, j);
+            peoplePane.add(salarySize, 1, j);
+            peoplePane.add(date, 2, j);
+        }
+
+        mainField.setMargin(gridPane, new Insets(0, 40, 0, 40));
+        mainField.setMargin(peoplePane, new Insets(50, 40, 0, 40));
+        mainField.getChildren().add(gridPane);
+        mainField.getChildren().add(peoplePane);
     }
 
     @FXML
@@ -265,9 +331,84 @@ public class MainController implements Initializable {
     }
 
     public void informationNumber(long id){
-        System.out.println(id);
-        title.setText("");
-        // доделать
+        title.setText("Информация о номере " + id);
+        mainField.getChildren().clear();
+
+        ReservationManager reservationManager = ReservationManager.getInstance();
+        List<Reservation> reservations = reservationManager.getReservationForNumber(id);
+
+        GridPane gridPane = new GridPane();
+        int i = 0;
+        gridPane.getColumnConstraints().addAll(
+                new ColumnConstraints(80), new ColumnConstraints(100), new ColumnConstraints(150),
+                new ColumnConstraints(150), new ColumnConstraints(190), new ColumnConstraints(150),
+                new ColumnConstraints(120), new ColumnConstraints(100));
+
+        Label numberTop = new Label("Номер");
+        Label numberTypeTop = new Label("Тип");
+        Label startTop = new Label("Въезд");
+        Label finishTop = new Label("Выезд");
+        Label statusTop = new Label("Статус");
+        Label numberCountTop = new Label("Люди");
+
+        numberTop.setStyle("-fx-font-size: 18px;");
+        numberTypeTop.setStyle("-fx-font-size: 18px;");
+        startTop.setStyle("-fx-font-size: 18px;");
+        finishTop.setStyle("-fx-font-size: 18px;");
+        statusTop.setStyle("-fx-font-size: 18px;");
+        numberCountTop.setStyle("-fx-font-size: 18px;");
+
+        gridPane.add(numberTop, 0, i);
+        gridPane.add(numberTypeTop, 1, i);
+        gridPane.add(startTop, 2, i);
+        gridPane.add(finishTop, 3, i);
+        gridPane.add(statusTop, 4, i);
+        gridPane.add(numberCountTop, 5, i);
+
+
+        for(Reservation reservation : reservations){
+            i++;
+            gridPane.getRowConstraints().add(new RowConstraints(40));
+            Label number = new Label(String.valueOf(reservation.getNumber().getId()));
+            Label numberType = new Label(NumberClass.getString(reservation.getNumberClass()));
+            Calendar startDate = reservation.getStart();
+            Calendar finishDate = reservation.getFinish();
+            Label start = new Label( String.format("%02d.%02d.%02d", startDate.get(Calendar.DAY_OF_MONTH),
+                    startDate.get(Calendar.MONTH), startDate.get(Calendar.YEAR)));
+            Label finish = new Label(String.format("%02d.%02d.%02d", finishDate.get(Calendar.DAY_OF_MONTH),
+                    finishDate.get(Calendar.MONTH), finishDate.get(Calendar.YEAR)));
+
+            Label numberCount = new Label(String.valueOf(reservation.getResidents().size()));
+
+            ChoiceBox<String> status = new ChoiceBox<String>(FXCollections.observableArrayList("Забронировано", "Отмена", "Оплачено", "Закрыто"));
+            status.setValue(ReservationStatus.getString(reservation.getReservationStatus()));
+            Button information = new Button("Информация");
+            Button delete = new Button("Удалить");
+
+            number.setStyle("-fx-font-size: 18px;");
+            numberType.setStyle("-fx-font-size: 18px;");
+            start.setStyle("-fx-font-size: 18px;");
+            finish.setStyle("-fx-font-size: 18px;");
+            numberCount.setStyle("-fx-font-size: 18px;");
+
+            status.setOnAction(a -> newReservationStatus(reservation.getId(), status.getValue(), id));
+            delete.setOnAction(a -> deleteReservation(reservation.getId(), id));
+            information.setOnAction(a -> informationReservation(reservation.getId()));
+
+            gridPane.setMargin(delete, new Insets(0, 0, 0, 20));
+
+            gridPane.add(number, 0, i);
+            gridPane.add(numberType, 1, i);
+            gridPane.add(start, 2, i);
+            gridPane.add(finish, 3, i);
+            gridPane.add(status, 4, i);
+            gridPane.add(numberCount, 5, i);
+            gridPane.add(information, 6, i);
+            gridPane.add(delete, 7, i);
+        }
+
+        mainField.setMargin(gridPane, new Insets(0, 40, 0, 40));
+        mainField.getChildren().add(gridPane);
     }
 
     public void deleteNumber(long id){
@@ -310,7 +451,7 @@ public class MainController implements Initializable {
         Label startTop = new Label("Въезд");
         Label finishTop = new Label("Выезд");
         Label statusTop = new Label("Статус");
-        Label numberCountTop = new Label("Количество");
+        Label numberCountTop = new Label("Люди");
 
         numberTop.setStyle("-fx-font-size: 18px;");
         numberTypeTop.setStyle("-fx-font-size: 18px;");
@@ -380,6 +521,13 @@ public class MainController implements Initializable {
         else showCurrentReservations();
     }
 
+    public void newReservationStatus(long id, String str, long idShow){
+        System.out.println(str + " " + id);
+        ReservationManager reservationManager = ReservationManager.getInstance();
+        reservationManager.updateStatus(id, str);
+        informationNumber(idShow);
+    }
+
     public void deleteReservation(long id, boolean all){
         ReservationManager reservationManager = ReservationManager.getInstance();
         reservationManager.deleteReservation(id);
@@ -387,8 +535,92 @@ public class MainController implements Initializable {
         else showCurrentReservations();
     }
 
+    public void deleteReservation(long id, long idShow){
+        ReservationManager reservationManager = ReservationManager.getInstance();
+        reservationManager.deleteReservation(id);
+        informationNumber(idShow);
+    }
+
     public void informationReservation(long id){
-        System.out.println("Информация " + id);
+        title.setText("Информация о бронировании " + id);
+        mainField.getChildren().clear();
+        Reservation reservation = ReservationManager.getInstance().getReservation(id);
+        List<Resident> residents = reservation.getResidents();
+
+        Calendar startDate = reservation.getStart();
+        Calendar finishDate = reservation.getFinish();
+
+
+        GridPane gridPane = new GridPane();
+        int i = 0;
+        gridPane.getColumnConstraints().addAll(new ColumnConstraints(150),
+                new ColumnConstraints(150), new ColumnConstraints(100), new ColumnConstraints(150),
+                new ColumnConstraints(150), new ColumnConstraints(350));
+
+        Label statusTitle = new Label("Статус");
+        Label numberTitle = new Label("Номер");
+        Label sizeTitle = new Label("Людей");
+        Label startTitle = new Label("Начало");
+        Label finishTitle = new Label("Конец");
+        Label commentTitle = new Label("Комментарий");
+        //добавить коммент
+
+        Label status = new Label(ReservationStatus.getString(reservation.getReservationStatus()));
+        Label number = new Label(reservation.getId() + "(" +
+                NumberClass.getString(reservation.getNumberClass()) + ")");
+        Label size = new Label(String.valueOf(reservation.getResidents().size()));
+        Label start = new Label( String.format("%02d.%02d.%02d", startDate.get(Calendar.DAY_OF_MONTH),
+                startDate.get(Calendar.MONTH), startDate.get(Calendar.YEAR)));
+        Label finish = new Label(String.format("%02d.%02d.%02d", finishDate.get(Calendar.DAY_OF_MONTH),
+                finishDate.get(Calendar.MONTH), finishDate.get(Calendar.YEAR)));
+        Label comment = new Label(reservation.getComment());
+
+        gridPane.setStyle("-fx-font-size: 18px;");
+
+        gridPane.add(statusTitle, 0, 0);
+        gridPane.add(numberTitle, 1, 0);
+        gridPane.add(sizeTitle, 2, 0);
+        gridPane.add(startTitle, 3, 0);
+        gridPane.add(finishTitle, 4, 0);
+        gridPane.add(commentTitle, 5, 0);
+        gridPane.add(status, 0, 1);
+        gridPane.add(number, 1, 1);
+        gridPane.add(size, 2, 1);
+        gridPane.add(start, 3, 1);
+        gridPane.add(finish, 4, 1);
+        gridPane.add(comment, 5, 1);
+
+
+        GridPane peoplePane = new GridPane();
+        peoplePane.setStyle("-fx-font-size: 18px;");
+        peoplePane.getColumnConstraints().addAll(new ColumnConstraints(50),
+                new ColumnConstraints(200), new ColumnConstraints(200));
+        int j = 0;
+
+        Label positionTitle = new Label("№");
+        Label nameTitle = new Label("ФИО");
+        Label phoneTitle = new Label("Телефон");
+
+        peoplePane.add(positionTitle, 0, j);
+        peoplePane.add(nameTitle, 1, j);
+        peoplePane.add(phoneTitle, 2, j);
+
+        for(Resident resident : residents){
+            j++;
+            Label position = new Label(String.valueOf(j));
+            Label name= new Label(resident.getName());
+            Label phone = new Label(resident.getContact());
+
+            peoplePane.add(position, 0, j);
+            peoplePane.add(name, 1, j);
+            peoplePane.add(phone, 2, j);
+        }
+
+        mainField.setMargin(gridPane, new Insets(0, 40, 0, 40));
+        mainField.setMargin(peoplePane, new Insets(50, 40, 0, 40));
+        mainField.getChildren().add(gridPane);
+        mainField.getChildren().add(peoplePane);
+
     }
 
     public void giveSalary(){

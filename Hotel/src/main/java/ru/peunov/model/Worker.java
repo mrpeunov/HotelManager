@@ -93,6 +93,14 @@ public class Worker {
         }
     }
 
+    public List<Salary> getAllSalary() {
+        return allSalary;
+    }
+
+    public void setAllSalary(List<Salary> allSalary) {
+        this.allSalary = allSalary;
+    }
+
     public void giveSalary(){
         Salary newSalary = new Salary(salary, this);
         allSalary.add(newSalary);
