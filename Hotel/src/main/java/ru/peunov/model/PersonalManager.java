@@ -4,6 +4,8 @@ import ru.peunov.HibernateUtil;
 import ru.peunov.dao.SalaryDAO;
 import ru.peunov.dao.WorkerDAO;
 import ru.peunov.enums.Position;
+import ru.peunov.enums.Status;
+
 import java.util.List;
 
 public class PersonalManager implements Manager {
@@ -56,7 +58,7 @@ public class PersonalManager implements Manager {
         worker.setName(name);
         worker.setSalary(salary);
         workerDAO.saveOrUpdate(worker);
-        update();
+        Hotel.updateAll();
     }
 
     public List<Worker> getPersonal() {
@@ -66,8 +68,7 @@ public class PersonalManager implements Manager {
     public void deleteWorker(long id){
         WorkerDAO workerDAO = new WorkerDAO(HibernateUtil.getSessionFactory());
         workerDAO.delete(workerDAO.read(id));
-        //исправить
-        update();
+        Hotel.updateAll();
     }
 
     public void setPersonal(List<Worker> personal) {
@@ -76,7 +77,7 @@ public class PersonalManager implements Manager {
 
     public void giveSalaryAll(){
         for(Worker worker : personal){
-            worker.giveSalary();
+            if(worker.getStatus() == Status.WORKED) worker.giveSalary();
         }
     }
 
@@ -88,5 +89,14 @@ public class PersonalManager implements Manager {
             }
         }
         return result;
+    }
+
+    public void changeStatusWorker(long id){
+        WorkerDAO workerDAO = new WorkerDAO(HibernateUtil.getSessionFactory());
+        Worker worker = workerDAO.read(id);
+        if(worker.getStatus() == Status.DISMISSED) worker.setStatus(Status.WORKED);
+        else worker.setStatus(Status.DISMISSED);
+        workerDAO.saveOrUpdate(worker);
+        Hotel.updateAll();
     }
 }

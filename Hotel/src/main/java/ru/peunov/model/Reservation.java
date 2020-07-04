@@ -22,7 +22,7 @@ public class Reservation {
     @GeneratedValue(strategy= GenerationType.TABLE)
     private long id;
 
-    @OneToMany(mappedBy = "reservation", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "reservation", fetch = FetchType.EAGER,  cascade = CascadeType.ALL)
     private List<Resident> residents;
 
     @ManyToOne(optional = true)

@@ -14,8 +14,13 @@ public class Hotel {
         reservationManager = ReservationManager.getInstance();
         numberManager = NumberManager.getInstance();
         personalManager = PersonalManager.getInstance();
-        ReservationDAO reservationDAO = new ReservationDAO(HibernateUtil.getSessionFactory());
         testData();
+    }
+
+    public static void updateAll(){
+        NumberManager.update();
+        PersonalManager.update();
+        ReservationManager.update();
     }
 
     public void testData(){

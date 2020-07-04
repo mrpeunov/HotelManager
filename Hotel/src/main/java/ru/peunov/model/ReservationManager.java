@@ -6,6 +6,7 @@ import ru.peunov.dao.ReservationDAO;
 import ru.peunov.enums.ReservationStatus;
 import ru.peunov.exception.NoReservationException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class ReservationManager implements Manager {
@@ -18,6 +19,14 @@ public class ReservationManager implements Manager {
     private ReservationManager() {
         ReservationDAO reservationDAO = new ReservationDAO(HibernateUtil.getSessionFactory());
         reservations = reservationDAO.getAll();
+        Calendar now = Calendar.getInstance();
+        now.add(Calendar.DATE, -1);
+        for(Reservation reservation : reservations){
+            if(reservation.getFinish().before(now) & reservation.getReservationStatus() != ReservationStatus.CLOSE) {
+                reservation.setReservationStatus(ReservationStatus.CLOSE);
+                reservationDAO.saveOrUpdate(reservation);
+            }
+        }
     };
 
     public static ReservationManager getInstance(){
@@ -47,7 +56,7 @@ public class ReservationManager implements Manager {
             }
         }
         if(!flag) throw new NoReservationException("Not found free number");
-        else update();
+        else Hotel.updateAll();
     };
 
     public List<Reservation> getReservationForNumber(long id){
@@ -71,10 +80,10 @@ public class ReservationManager implements Manager {
     public void deleteReservation(long id){
         ReservationDAO reservationDAO = new ReservationDAO(HibernateUtil.getSessionFactory());
         reservationDAO.delete(reservationDAO.read(id));
-        update();
+        Hotel.updateAll();
     }
 
-    private void update(){
+    public static void update(){
         reservationManager = new ReservationManager();
     }
 
@@ -89,7 +98,7 @@ public class ReservationManager implements Manager {
             financeManager.addIncome(id);
         }
 
-        update();
+        Hotel.updateAll();
     }
 
     public Reservation getReservation(long id){

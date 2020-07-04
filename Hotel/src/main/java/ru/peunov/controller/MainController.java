@@ -100,21 +100,24 @@ public class MainController implements Initializable {
         GridPane gridPane = new GridPane();
         int i = 0;
         gridPane.getColumnConstraints().addAll(
-                new ColumnConstraints(340), new ColumnConstraints(200),
-                new ColumnConstraints(100), new ColumnConstraints(150),
-                new ColumnConstraints(120), new ColumnConstraints(100));
+                new ColumnConstraints(170), new ColumnConstraints(160), new ColumnConstraints(120),
+                new ColumnConstraints(140), new ColumnConstraints(150), new ColumnConstraints(110),
+                new ColumnConstraints(100), new ColumnConstraints(110));
 
         Label fioTitle = new Label("ФИО");
         Label positionTitle = new Label("Должность");
         Label salaryTitle = new Label("Зарплата");
+        Label statusTitle = new Label("Статус");
 
         fioTitle.setStyle("-fx-font-size: 18px;");
         positionTitle.setStyle("-fx-font-size: 18px;");
         salaryTitle.setStyle("-fx-font-size: 18px;");
+        statusTitle.setStyle("-fx-font-size: 18px;");
 
         gridPane.add(fioTitle, 0, i);
         gridPane.add(positionTitle, 1, i);
         gridPane.add(salaryTitle, 2, i);
+        gridPane.add(statusTitle, 3, i);
 
         for(Worker worker : personal){
             i++;
@@ -122,27 +125,32 @@ public class MainController implements Initializable {
             Label fio = new Label(String.valueOf(worker.getName()));
             Label position = new Label(Position.getString(worker.getPosition()));
             Label salary = new Label(String.valueOf(worker.getSalary()));
+            Label status = new Label(Status.getString(worker.getStatus()));
             Button information = new Button("Вся информация");
             Button change = new Button("Изменить");
             Button delete = new Button("Удалить");
+            Button dismiss;
+            if(worker.getStatus() == Status.WORKED) dismiss = new Button("Уволить");
+            else dismiss = new Button("Нанять");
 
             fio.setStyle("-fx-font-size: 18px;");
             position.setStyle("-fx-font-size: 18px;");
             salary.setStyle("-fx-font-size: 18px;");
+            status.setStyle("-fx-font-size: 18px;");
 
             change.setOnAction(a -> changeWorker(worker.getId()));
             delete.setOnAction(a -> deleteWorker(worker.getId()));
             information.setOnAction(a -> informationWorker(worker.getId()));
-
-            gridPane.setMargin(change, new Insets(0, 0, 0, 20));
-            gridPane.setMargin(delete, new Insets(0, 0, 0, 20));
+            dismiss.setOnAction(a -> changeStatusWorker(worker.getId()));
 
             gridPane.add(fio, 0, i);
             gridPane.add(position, 1, i);
             gridPane.add(salary, 2, i);
-            gridPane.add(information, 3, i);
-            gridPane.add(change, 4, i);
-            gridPane.add(delete, 5, i);
+            gridPane.add(status, 3, i);
+            gridPane.add(information, 4, i);
+            gridPane.add(change, 5, i);
+            gridPane.add(delete, 6, i);
+            gridPane.add(dismiss, 7, i);
         }
         mainField.setMargin(gridPane, new Insets(0, 40, 0, 40));
         mainField.getChildren().add(gridPane);
@@ -244,6 +252,12 @@ public class MainController implements Initializable {
         mainField.setMargin(peoplePane, new Insets(50, 40, 0, 40));
         mainField.getChildren().add(gridPane);
         mainField.getChildren().add(peoplePane);
+    }
+
+    public void changeStatusWorker(long id){
+        PersonalManager personalManager = PersonalManager.getInstance();
+        personalManager.changeStatusWorker(id);
+        showWorker();
     }
 
     @FXML

@@ -8,12 +8,14 @@ import java.util.ArrayList;
 @Entity
 @DiscriminatorValue("EC")
 public class Economy extends Number {
-    public Economy(int capacity, int price){
+    public Economy(int capacity, int price, long id){
         this.capacity = capacity;
         this.price = price;
+        this.id = id;
+        this.allReservation = new ArrayList<Reservation>();
         hybridism = new ClassicalHybridism();
         numberClass = NumberClass.ECONOMY;
-        allReservation = new ArrayList<Reservation>();
+
     }
 
     public Economy(){

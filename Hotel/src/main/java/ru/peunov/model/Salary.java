@@ -24,7 +24,7 @@ public class Salary {
         this.id = id;
     }
 
-    @ManyToOne(optional = true, cascade = CascadeType.ALL)
+    @ManyToOne(optional = true, cascade = CascadeType.REMOVE)
     @JoinColumn(name="worker_id")
     private Worker worker;
 

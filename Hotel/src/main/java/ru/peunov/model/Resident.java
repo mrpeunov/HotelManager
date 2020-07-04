@@ -16,7 +16,7 @@ public class Resident {
     @Column(name = "contact")
     private String contact;
 
-    @ManyToOne(optional = true, cascade = CascadeType.ALL)
+    @ManyToOne(optional = true, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "reservation_id")
     private Reservation reservation;
 

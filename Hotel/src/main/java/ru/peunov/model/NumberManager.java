@@ -64,28 +64,30 @@ public class NumberManager implements Manager {
 
     public void addNumber(int capacity, int price, NumberClass numberClass){
         Number newNumber;
+        long id = numbers.size() + 1;
         switch (numberClass){
 
             case HOSTEL:
-                newNumber = new Hostel(price, capacity);
+                newNumber = new Hostel(price, capacity, id);
                 break;
 
             case ECONOMY:
-                newNumber = new Economy(price, capacity);
+                newNumber = new Economy(price, capacity, id);
                 break;
 
             case LUX:
-                newNumber = new Lux(price, capacity);
+                newNumber = new Lux(price, capacity, id);
                 break;
 
             case STANDARD:
             default:
-                newNumber = new Standard(price, capacity);
+                newNumber = new Standard(price, capacity, id);
                 break;
         }
         numbers.add(newNumber);
         NumberDAO numberDAO = new NumberDAO(HibernateUtil.getSessionFactory());
         numberDAO.create(newNumber);
+        Hotel.updateAll();
     }
 
     public List<Number> getNumbers() {
@@ -101,12 +103,12 @@ public class NumberManager implements Manager {
         number.setCapacity(capacity);
         number.setNumberClass(numberClass);
         numberDAO.saveOrUpdate(number);
-        update();
+        Hotel.updateAll();
     }
 
     public void deleteNumber(long id){
         NumberDAO numberDAO = new NumberDAO(HibernateUtil.getSessionFactory());
         numberDAO.delete(numberDAO.read(id));
-        update();
+        Hotel.updateAll();
     }
 }

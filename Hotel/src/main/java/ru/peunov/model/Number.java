@@ -21,8 +21,7 @@ public abstract class Number {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy= GenerationType.SEQUENCE)
-    private long id;
+    protected long id;
 
     @Column(name = "capacity")
     protected int capacity;
@@ -36,7 +35,7 @@ public abstract class Number {
     @Transient
     protected Hybridism hybridism;
 
-    @OneToMany(mappedBy = "number", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "number", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     protected List<Reservation> allReservation;
 
     public Number() {

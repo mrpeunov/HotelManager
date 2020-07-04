@@ -15,9 +15,10 @@ public class Hostel extends Number {
         numberClass = NumberClass.HOSTEL;
     }
 
-    public Hostel(int capacity, int price){
+    public Hostel(int capacity, int price, long id){
         this.capacity = capacity;
         this.price = price;
+        this.id = id;
         this.allReservation = new ArrayList<Reservation>();
         hybridism = new HostelHybridism();
         numberClass = NumberClass.HOSTEL;
