@@ -186,7 +186,6 @@ public class MainController implements Initializable {
     }
 
     public void informationWorker(long id){
-        System.out.println("Информация о работнике");
         title.setText("Информация о работнике " + id);
         mainField.getChildren().clear();
         Worker worker = PersonalManager.getInstance().getWorker(id);
@@ -241,7 +240,7 @@ public class MainController implements Initializable {
 
             Calendar dateSalary = salary.getDate();
             Label date = new Label(String.format("%02d.%02d.%02d", dateSalary.get(Calendar.DAY_OF_MONTH),
-                    dateSalary.get(Calendar.MONTH), dateSalary.get(Calendar.YEAR)));
+                    dateSalary.get(Calendar.MONTH)+1, dateSalary.get(Calendar.YEAR)));
 
             peoplePane.add(number, 0, j);
             peoplePane.add(salarySize, 1, j);
@@ -388,9 +387,9 @@ public class MainController implements Initializable {
             Calendar startDate = reservation.getStart();
             Calendar finishDate = reservation.getFinish();
             Label start = new Label( String.format("%02d.%02d.%02d", startDate.get(Calendar.DAY_OF_MONTH),
-                    startDate.get(Calendar.MONTH), startDate.get(Calendar.YEAR)));
+                    startDate.get(Calendar.MONTH)+1, startDate.get(Calendar.YEAR)));
             Label finish = new Label(String.format("%02d.%02d.%02d", finishDate.get(Calendar.DAY_OF_MONTH),
-                    finishDate.get(Calendar.MONTH), finishDate.get(Calendar.YEAR)));
+                    finishDate.get(Calendar.MONTH)+1, finishDate.get(Calendar.YEAR)));
 
             Label numberCount = new Label(String.valueOf(reservation.getResidents().size()));
 
@@ -490,9 +489,9 @@ public class MainController implements Initializable {
             Calendar startDate = reservation.getStart();
             Calendar finishDate = reservation.getFinish();
             Label start = new Label( String.format("%02d.%02d.%02d", startDate.get(Calendar.DAY_OF_MONTH),
-                    startDate.get(Calendar.MONTH), startDate.get(Calendar.YEAR)));
+                    startDate.get(Calendar.MONTH)+1, startDate.get(Calendar.YEAR)));
             Label finish = new Label(String.format("%02d.%02d.%02d", finishDate.get(Calendar.DAY_OF_MONTH),
-                    finishDate.get(Calendar.MONTH), finishDate.get(Calendar.YEAR)));
+                    finishDate.get(Calendar.MONTH)+1, finishDate.get(Calendar.YEAR)));
 
             Label numberCount = new Label(String.valueOf(reservation.getResidents().size()));
 
@@ -528,7 +527,6 @@ public class MainController implements Initializable {
     }
 
     public void newReservationStatus(long id, String str, boolean all){
-        System.out.println(str + " " + id);
         ReservationManager reservationManager = ReservationManager.getInstance();
         reservationManager.updateStatus(id, str);
         if(all) showAllReservations();
@@ -536,7 +534,6 @@ public class MainController implements Initializable {
     }
 
     public void newReservationStatus(long id, String str, long idShow){
-        System.out.println(str + " " + id);
         ReservationManager reservationManager = ReservationManager.getInstance();
         reservationManager.updateStatus(id, str);
         informationNumber(idShow);
@@ -584,9 +581,9 @@ public class MainController implements Initializable {
                 NumberClass.getString(reservation.getNumberClass()) + ")");
         Label size = new Label(String.valueOf(reservation.getResidents().size()));
         Label start = new Label( String.format("%02d.%02d.%02d", startDate.get(Calendar.DAY_OF_MONTH),
-                startDate.get(Calendar.MONTH), startDate.get(Calendar.YEAR)));
+                startDate.get(Calendar.MONTH)+1, startDate.get(Calendar.YEAR)));
         Label finish = new Label(String.format("%02d.%02d.%02d", finishDate.get(Calendar.DAY_OF_MONTH),
-                finishDate.get(Calendar.MONTH), finishDate.get(Calendar.YEAR)));
+                finishDate.get(Calendar.MONTH)+1, finishDate.get(Calendar.YEAR)));
         Label comment = new Label(reservation.getComment());
 
         gridPane.setStyle("-fx-font-size: 18px;");
@@ -699,7 +696,7 @@ public class MainController implements Initializable {
 
                             Calendar thisDate = finance.getDate();
                             Label date = new Label(String.format("%02d.%02d.%02d", thisDate.get(Calendar.DAY_OF_MONTH),
-                                    thisDate.get(Calendar.MONTH), thisDate.get(Calendar.YEAR)));
+                                    thisDate.get(Calendar.MONTH)+1, thisDate.get(Calendar.YEAR)));
 
                             size.setStyle("-fx-font-size: 18px;");
                             date.setStyle("-fx-font-size: 18px;");
@@ -793,7 +790,7 @@ public class MainController implements Initializable {
 
                             Calendar thisDate = finance.getDate();
                             Label date = new Label(String.format("%02d.%02d.%02d", thisDate.get(Calendar.DAY_OF_MONTH),
-                                    thisDate.get(Calendar.MONTH), thisDate.get(Calendar.YEAR)));
+                                    thisDate.get(Calendar.MONTH)+1, thisDate.get(Calendar.YEAR)));
 
                             size.setStyle("-fx-font-size: 18px;");
                             date.setStyle("-fx-font-size: 18px;");
@@ -859,7 +856,7 @@ public class MainController implements Initializable {
 
             Calendar thisDate = finance.getDate();
             Label date = new Label(String.format("%02d.%02d.%02d", thisDate.get(Calendar.DAY_OF_MONTH),
-                    thisDate.get(Calendar.MONTH), thisDate.get(Calendar.YEAR)));
+                    thisDate.get(Calendar.MONTH)+1, thisDate.get(Calendar.YEAR)));
 
             size.setStyle("-fx-font-size: 18px;");
             date.setStyle("-fx-font-size: 18px;");

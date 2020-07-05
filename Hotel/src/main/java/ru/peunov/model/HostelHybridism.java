@@ -44,14 +44,12 @@ public class HostelHybridism implements Hybridism {
 
                         if(startDelta > 0) {
                             if(finishDelta > 0){
-                                System.out.println("Сюды 1");
                                 int currentDelta = (int)((finishReservationTime - startTime) / (24 * 60 * 60 * 1000));
                                 for(int i = 0; i < currentDelta +1 ; i++){
                                     arr[i] += checkReservation.getResidents().size();
                                 }
                             }
                             else{
-                                System.out.println("Сюды 2");
                                 for(int i = 0; i < days; i++){
                                     arr[i] += checkReservation.getResidents().size();
                                 }
@@ -59,15 +57,12 @@ public class HostelHybridism implements Hybridism {
                         }
                         else {
                             if(finishDelta > 0){
-                                System.out.println("Сюды 3 " + finishDelta);
                                 int currentDelta = (int)((startReservationTime - startTime) / (24 * 60 * 60 * 1000));
                                 for(int i = currentDelta; i < currentDelta+delta; i++){
-                                    System.out.println("ddd");
                                     arr[i] += checkReservation.getResidents().size();
                                 }
                             }
                             else{
-                                System.out.println("Сюды 4");
                                 int currentDelta = (int)((startReservationTime - startTime) / (24 * 60 * 60 * 1000));
                                 for(int i = currentDelta; i < days; i++){
                                     arr[i] += checkReservation.getResidents().size();

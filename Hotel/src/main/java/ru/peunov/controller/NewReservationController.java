@@ -25,7 +25,6 @@ import java.util.ResourceBundle;
 
 public class NewReservationController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
-        //System.out.println("Привет");
         residents = new ArrayList<Resident>();
         residentNumber = 0;
         comment.setTextFormatter(new TextFormatter<String>(change ->
@@ -122,10 +121,6 @@ public class NewReservationController implements Initializable {
     }
 
     public void createReservation(){
-        System.out.println("Создание бронирования");
-        for(Resident resident : residents){
-            System.out.println(resident.toString());
-        }
         if(residents.size() != 0 && dateStart.getValue() != null &&
                 dateFinish.getValue() != null && choiceNumber.getValue() != null){
 

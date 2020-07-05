@@ -14,7 +14,7 @@ public class Hotel {
         reservationManager = ReservationManager.getInstance();
         numberManager = NumberManager.getInstance();
         personalManager = PersonalManager.getInstance();
-        testData();
+        //testData();
     }
 
     public static void updateAll(){

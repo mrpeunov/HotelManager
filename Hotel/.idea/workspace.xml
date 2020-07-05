@@ -22,29 +22,19 @@
     <list default="true" id="f99ac0cb-0627-41c4-b06b-29f9919cb047" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ru/peunov/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/peunov/controller/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/peunov/model/Economy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/peunov/model/Economy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/peunov/model/Hostel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/peunov/model/Hostel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/peunov/controller/NewReservationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/peunov/controller/NewReservationController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ru/peunov/model/HostelHybridism.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/peunov/model/HostelHybridism.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ru/peunov/model/Hotel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/peunov/model/Hotel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/peunov/model/Lux.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/peunov/model/Lux.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/peunov/model/Number.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/peunov/model/Number.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/peunov/model/NumberManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/peunov/model/NumberManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/peunov/model/PersonalManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/peunov/model/PersonalManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/peunov/model/Reservation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/peunov/model/Reservation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/peunov/model/ReservationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/peunov/model/ReservationManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/peunov/model/Resident.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/peunov/model/Resident.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/peunov/model/Salary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/peunov/model/Salary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/peunov/model/Standard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/peunov/model/Standard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/peunov/model/Manager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/peunov/model/Manager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/template.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/template.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fxml/template.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fxml/template.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/hibernate.cfg.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ru/peunov/controller/MainController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/peunov/controller/MainController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ru/peunov/controller/NewReservationController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/peunov/controller/NewReservationController$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ru/peunov/controller/NewReservationController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/peunov/controller/NewReservationController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ru/peunov/model/HostelHybridism.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/peunov/model/HostelHybridism.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ru/peunov/model/Hotel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/peunov/model/Hotel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/peunov/model/Number.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/peunov/model/Number.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/peunov/model/NumberManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/peunov/model/NumberManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/peunov/model/PersonalManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/peunov/model/PersonalManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/peunov/model/Reservation.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/peunov/model/Reservation.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/peunov/model/ReservationManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/peunov/model/ReservationManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/peunov/model/Resident.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/peunov/model/Resident.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/peunov/model/Salary.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/peunov/model/Salary.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,7 +158,7 @@
       <workItem from="1592936542547" duration="1252000" />
       <workItem from="1592937815145" duration="36163000" />
       <workItem from="1593069747734" duration="32607000" />
-      <workItem from="1593511209782" duration="104779000" />
+      <workItem from="1593511209782" duration="110248000" />
     </task>
     <servers />
   </component>
@@ -220,22 +210,22 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1592641402650" />
-    <state width="1493" height="288" key="GridCell.Tab.0.bottom" timestamp="1593864140510">
+    <state width="1493" height="166" key="GridCell.Tab.0.bottom" timestamp="1593934639310">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="288" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1593864140510" />
-    <state width="1493" height="288" key="GridCell.Tab.0.center" timestamp="1593864140510">
+    <state width="1493" height="166" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1593934639310" />
+    <state width="1493" height="166" key="GridCell.Tab.0.center" timestamp="1593934639310">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="288" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1593864140510" />
-    <state width="1493" height="288" key="GridCell.Tab.0.left" timestamp="1593864140509">
+    <state width="1493" height="166" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1593934639310" />
+    <state width="1493" height="166" key="GridCell.Tab.0.left" timestamp="1593934639310">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="288" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1593864140509" />
-    <state width="1493" height="288" key="GridCell.Tab.0.right" timestamp="1593864140510">
+    <state width="1493" height="166" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1593934639310" />
+    <state width="1493" height="166" key="GridCell.Tab.0.right" timestamp="1593934639310">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="288" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1593864140510" />
+    <state width="1493" height="166" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1593934639310" />
     <state width="1493" height="261" key="GridCell.Tab.1.bottom" timestamp="1593704729152">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -315,17 +305,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/ru/peunov/controller/MainController.java</url>
-          <line>326</line>
+          <line>325</line>
           <option name="timeStamp" value="26" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/ru/peunov/controller/MainController.java</url>
-          <line>454</line>
+          <line>453</line>
           <option name="timeStamp" value="31" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/ru/peunov/controller/MainController.java</url>
-          <line>545</line>
+          <line>542</line>
           <option name="timeStamp" value="32" />
         </line-breakpoint>
       </breakpoints>
